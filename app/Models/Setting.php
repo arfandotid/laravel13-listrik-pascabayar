@@ -2,17 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 
+#[Fillable(['app_name', 'app_logo'])]
 class Setting extends Model
 {
-    /**
-     * fillable
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'app_name',
-        'app_logo',
-    ];
+    //
 }
