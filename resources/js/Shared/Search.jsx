@@ -38,7 +38,6 @@ export default function SearchComponent({ URL }) {
         <>
             <form onSubmit={handleSearch} className="space-y-4">
                 <div className="flex flex-col md:flex-row md:items-center md:space-x-4">
-                    {/* Search input */}
                     <div className="flex-1">
                         <div className="relative">
                             <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -53,8 +52,6 @@ export default function SearchComponent({ URL }) {
                             />
                         </div>
                     </div>
-
-                    {/* Action buttons */}
                     <div className="flex space-x-3 mt-3 md:mt-0">
                         <Button type="submit">
                             <Search className="w-4 h-4 inline mr-2" />

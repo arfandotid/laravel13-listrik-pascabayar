@@ -12,9 +12,8 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Profile/Index', [
-            'user' => Auth::user(),
-        ]);
+        $user = Auth::user();
+        return Inertia::render('Profile/Index', compact('user'));
     }
 
     public function update(Request $request)
@@ -23,11 +22,13 @@ class ProfileController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $userId,
+            'username' => 'required|string|max:255|unique:users,username,' . $userId,
         ]);
 
         $user = User::findOrFail($userId);
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->username = $request->username;
 
         try {
             $user->save();

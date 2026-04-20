@@ -21,7 +21,7 @@ import { LogIn } from "lucide-react";
 export default function Login({ className, ...props }) {
     //destruct useForm
     const { data, setData, post, processing, errors } = useForm({
-        email: "",
+        login: "",
         password: "",
     });
 
@@ -54,25 +54,27 @@ export default function Login({ className, ...props }) {
                             <form onSubmit={loginHandler}>
                                 <FieldGroup>
                                     <Field>
-                                        <FieldLabel htmlFor="email">
-                                            Email
+                                        <FieldLabel htmlFor="login">
+                                            Email atau Username
                                         </FieldLabel>
+
                                         <Input
-                                            type="email"
-                                            placeholder="contoh@gmail.com"
-                                            value={data.email}
+                                            type="text"
+                                            placeholder="email atau username"
+                                            value={data.login}
                                             className={
-                                                errors.email
+                                                errors.login
                                                     ? "border-red-500 focus-visible:ring-red-500"
                                                     : ""
                                             }
                                             onChange={(e) =>
-                                                setData("email", e.target.value)
+                                                setData("login", e.target.value)
                                             }
                                         />
-                                        {errors.email && (
+
+                                        {errors.login && (
                                             <FieldDescription className="text-red-500">
-                                                {errors.email}
+                                                {errors.login}
                                             </FieldDescription>
                                         )}
                                     </Field>

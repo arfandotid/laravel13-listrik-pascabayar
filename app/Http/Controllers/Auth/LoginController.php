@@ -4,70 +4,48 @@ namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class LoginController extends Controller
 {
-    /**
-     * index
-     *
-     * @return void
-     */
     public function index()
     {
-        // return inertia
-        return inertia('Auth/Login');
+        return Inertia::render('Auth/Login');
     }
 
-    /**
-     * store
-     *
-     * @param  mixed $request
-     * @return void
-     */
     public function store(Request $request)
     {
-        // set validation
         $request->validate([
-            'email'     => 'required|email',
+            'login'     => 'required',
             'password'  => 'required',
         ]);
 
-        // get email and password from request
-        $credentials = $request->only('email', 'password');
+        $login = $request->input('login');
+        $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
-        // attempt to login
-        if (auth()->attempt($credentials)) {
+        $credentials = [
+            $field     => $login,
+            'password' => $request->password
+        ];
 
-            // regenerate session
+        if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-
-            // redirect route dashboard
-            return redirect()->route('dashboard');
+            return redirect()->to('/dashboard');
         }
 
-        // if login fails
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'login' => 'Email / Username atau password salah.',
         ]);
     }
 
-    /**
-     * logout
-     *
-     * @return void
-     */
     public function logout(Request $request)
     {
-        // logout user
-        auth()->logout();
+        Auth::logout();
 
-        // invalidate session
         $request->session()->invalidate();
-
-        // regenerate token
         $request->session()->regenerateToken();
 
-        // force redirect ke halaman login
         return redirect()->to('/login');
     }
 }

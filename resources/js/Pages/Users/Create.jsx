@@ -1,13 +1,6 @@
-// import Head dan Link dari Inertia
 import { Head, Link, useForm, usePage } from "@inertiajs/react";
-
-// import LayoutApp
 import LayoutApp from "@/Layouts/LayoutApp";
-
-// import icons
 import { Save } from "lucide-react";
-
-// import component PageHeader
 import PageHeader from "@/Shared/PageHeader";
 import { Field, FieldDescription, FieldLabel } from "@/Components/ui/field";
 import { Input } from "@/Components/ui/input";
@@ -15,18 +8,16 @@ import { Checkbox } from "@/Components/ui/checkbox";
 import { Button } from "@/Components/ui/button";
 
 export default function UsersCreate() {
-    // roles dari controller
     const { roles } = usePage().props;
 
-    // useForm untuk mengelola form data
     const { data, setData, post, processing, errors } = useForm({
         name: "",
         email: "",
+        username: "",
         password: "",
         roles: [],
     });
 
-    // fungsi toggleRole
     const toggleRole = (id) => {
         setData(
             "roles",
@@ -36,11 +27,9 @@ export default function UsersCreate() {
         );
     };
 
-    // fungsi handleSubmit
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // kirim data ke server
         post("/users");
     };
 
@@ -48,16 +37,13 @@ export default function UsersCreate() {
         <>
             <Head title={`Tambah User`} />
             <LayoutApp>
-                {/* Header */}
                 <PageHeader
                     title="Tambah User"
                     description="Buat akun pengguna dan tentukan role akses"
                 />
 
-                {/* Card */}
                 <form onSubmit={handleSubmit}>
                     <div className="space-y-5">
-                        {/* Name */}
                         <Field>
                             <FieldLabel>Nama</FieldLabel>
                             <Input
@@ -75,8 +61,6 @@ export default function UsersCreate() {
                                 </FieldDescription>
                             )}
                         </Field>
-
-                        {/* Email */}
                         <Field>
                             <FieldLabel>Email</FieldLabel>
                             <Input
@@ -94,8 +78,23 @@ export default function UsersCreate() {
                                 </FieldDescription>
                             )}
                         </Field>
-
-                        {/* Password */}
+                        <Field>
+                            <FieldLabel>Username</FieldLabel>
+                            <Input
+                                type="text"
+                                value={data.username}
+                                onChange={(e) =>
+                                    setData("username", e.target.value)
+                                }
+                                className={`${errors.username ? "border-red-500" : ""}`}
+                                placeholder="username"
+                            />
+                            {errors.username && (
+                                <FieldDescription className="mt-1 text-sm text-red-600">
+                                    {errors.username}
+                                </FieldDescription>
+                            )}
+                        </Field>
                         <Field>
                             <FieldLabel>Password</FieldLabel>
                             <Input
@@ -113,8 +112,6 @@ export default function UsersCreate() {
                                 </FieldDescription>
                             )}
                         </Field>
-
-                        {/* Roles */}
                         <Field>
                             <FieldLabel>Roles</FieldLabel>
                             {roles.map((role) => (
@@ -139,16 +136,14 @@ export default function UsersCreate() {
                             )}
                         </Field>
                     </div>
-
-                    {/* Tombol Aksi */}
                     <div className="flex justify-start space-x-2 pt-6">
-                        <Link href="/users">
-                            <Button variant="outline">Batal</Button>
-                        </Link>
                         <Button type="submit" disabled={processing}>
                             <Save />
                             {processing ? "Menyimpan..." : "Simpan"}
                         </Button>
+                        <Link href="/users">
+                            <Button variant="outline">Batal</Button>
+                        </Link>
                     </div>
                 </form>
             </LayoutApp>

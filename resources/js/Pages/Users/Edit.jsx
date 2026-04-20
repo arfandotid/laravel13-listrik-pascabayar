@@ -1,13 +1,6 @@
-// import Head dan Link dari Inertia
 import { Head, Link, useForm, usePage } from "@inertiajs/react";
-
-// import LayoutApp
 import LayoutApp from "@/Layouts/LayoutApp";
-
-// import icons
 import { Save } from "lucide-react";
-
-// import component PageHeader
 import PageHeader from "@/Shared/PageHeader";
 import { Input } from "@/Components/ui/input";
 import { Field, FieldDescription, FieldLabel } from "@/Components/ui/field";
@@ -15,18 +8,16 @@ import { Checkbox } from "@/Components/ui/checkbox";
 import { Button } from "@/Components/ui/button";
 
 export default function UsersEdit() {
-    // props dari controller
     const { user, roles, userRoles } = usePage().props;
 
-    // useForm untuk mengelola form data
     const { data, setData, put, processing, errors } = useForm({
         name: user.name || "",
         email: user.email || "",
+        username: user.username || "",
         password: "",
         roles: userRoles || [],
     });
 
-    // fungsi toggleRole
     const toggleRole = (id) => {
         setData(
             "roles",
@@ -36,11 +27,9 @@ export default function UsersEdit() {
         );
     };
 
-    // fungsi handleSubmit
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // kirim data ke server
         put(`/users/${user.id}`);
     };
 
@@ -48,16 +37,13 @@ export default function UsersEdit() {
         <>
             <Head title={`Edit User - ${import.meta.env.VITE_APP_NAME}`} />
             <LayoutApp>
-                {/* Header */}
                 <PageHeader
                     title="Edit User"
                     description="Perbarui data pengguna dan role akses"
                 />
 
-                {/* Card */}
                 <form onSubmit={handleSubmit}>
                     <div className="space-y-5">
-                        {/* Name */}
                         <Field>
                             <FieldLabel>Nama</FieldLabel>
                             <Input
@@ -75,8 +61,6 @@ export default function UsersEdit() {
                                 </FieldDescription>
                             )}
                         </Field>
-
-                        {/* Email */}
                         <Field>
                             <FieldLabel>Email</FieldLabel>
                             <Input
@@ -94,8 +78,23 @@ export default function UsersEdit() {
                                 </FieldDescription>
                             )}
                         </Field>
-
-                        {/* Password (Optional) */}
+                        <Field>
+                            <FieldLabel>Username</FieldLabel>
+                            <Input
+                                type="text"
+                                value={data.username}
+                                onChange={(e) =>
+                                    setData("username", e.target.value)
+                                }
+                                className={`${errors.username ? "border-red-500" : ""}`}
+                                placeholder="username"
+                            />
+                            {errors.username && (
+                                <FieldDescription className="mt-1 text-sm text-red-600">
+                                    {errors.username}
+                                </FieldDescription>
+                            )}
+                        </Field>
                         <Field>
                             <FieldLabel>Password (opsional)</FieldLabel>
                             <Input
@@ -113,8 +112,6 @@ export default function UsersEdit() {
                                 </FieldDescription>
                             )}
                         </Field>
-
-                        {/* Roles */}
                         <Field>
                             <FieldLabel>Roles</FieldLabel>
 
@@ -148,15 +145,14 @@ export default function UsersEdit() {
                         </Field>
                     </div>
 
-                    {/* Tombol Aksi */}
                     <div className="flex justify-start space-x-2 pt-6">
-                        <Link href="/users">
-                            <Button variant="outline">Batal</Button>
-                        </Link>
                         <Button type="submit" disabled={processing}>
                             <Save />
                             {processing ? "Menyimpan..." : "Simpan Perubahan"}
                         </Button>
+                        <Link href="/users">
+                            <Button variant="outline">Batal</Button>
+                        </Link>
                     </div>
                 </form>
             </LayoutApp>

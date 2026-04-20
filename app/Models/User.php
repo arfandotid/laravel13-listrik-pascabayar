@@ -21,6 +21,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'username',
         'password',
     ];
 
@@ -54,8 +55,6 @@ class User extends Authenticatable
      */
     public function getPermissionArray()
     {
-        return $this->getAllPermissions()->mapWithKeys(function ($pr) {
-            return [$pr['name'] => true];
-        });
+        return $this->getAllPermissions()->mapWithKeys(fn($pr) => [$pr['name'] => true]);
     }
 }

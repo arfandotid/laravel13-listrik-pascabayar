@@ -1,5 +1,5 @@
 // import Head dan Inertia hooks
-import { Head, useForm, usePage, router } from "@inertiajs/react";
+import { Head, useForm, usePage } from "@inertiajs/react";
 
 // import LayoutApp
 import LayoutApp from "@/Layouts/LayoutApp";
@@ -26,6 +26,7 @@ export default function ProfileIndex() {
     const { data, setData, post, processing, errors } = useForm({
         name: user?.name || "",
         email: user?.email || "",
+        username: user?.username || "",
 
         _method: "PUT",
     });
@@ -79,8 +80,22 @@ export default function ProfileIndex() {
                                 </FieldDescription>
                             )}
                         </Field>
-
-                        {/* Action */}
+                        <Field>
+                            <FieldLabel>Username</FieldLabel>
+                            <Input
+                                type="text"
+                                value={data.username}
+                                onChange={(e) =>
+                                    setData("username", e.target.value)
+                                }
+                                className={`${errors.username ? "border-red-500" : ""}`}
+                            />
+                            {errors.username && (
+                                <FieldDescription className="mt-1 text-sm text-red-600">
+                                    {errors.username}
+                                </FieldDescription>
+                            )}
+                        </Field>
                         <div>
                             <Button type="submit" disabled={processing}>
                                 <Save />

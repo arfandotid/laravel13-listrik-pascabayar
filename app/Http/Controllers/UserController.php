@@ -55,6 +55,7 @@ class UserController extends Controller implements HasMiddleware
         $request->validate([
             'name'     => 'required|string|max:255',
             'email'    => 'required|email|unique:users,email',
+            'username' => 'required|string|max:50|unique:users,username',
             'password' => 'required|min:8',
             'roles'    => 'required|array',
             'roles.*'  => 'exists:roles,id',
@@ -63,6 +64,7 @@ class UserController extends Controller implements HasMiddleware
         $user = User::create([
             'name'     => $request->name,
             'email'    => $request->email,
+            'username' => $request->username,
             'password' => Hash::make($request->password),
         ]);
 
@@ -86,14 +88,16 @@ class UserController extends Controller implements HasMiddleware
         $request->validate([
             'name'     => 'required|string|max:255',
             'email'    => 'required|email|unique:users,email,' . $user->id,
+            'username' => 'required|string|max:50|unique:users,username,' . $user->id,
             'password' => 'nullable|min:8',
             'roles'    => 'required|array',
             'roles.*'  => 'exists:roles,id',
         ]);
 
         $user->update([
-            'name'  => $request->name,
-            'email' => $request->email,
+            'name'     => $request->name,
+            'email'    => $request->email,
+            'username' => $request->username,
         ]);
 
         // update password jika diisi
