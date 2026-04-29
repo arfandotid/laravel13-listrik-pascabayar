@@ -1,6 +1,6 @@
 "use client";
 
-import { Command } from "lucide-react";
+import { Command, Zap } from "lucide-react";
 import {
     Sidebar,
     SidebarContent,
@@ -38,7 +38,7 @@ export function AppSidebar({ auth, ...props }) {
                                             className="h-full w-full object-contain rounded-lg"
                                         />
                                     ) : (
-                                        <Command className="size-4" />
+                                        <Zap className="size-4" />
                                     )}
                                 </div>
                                 <div className="grid flex-1 text-left text-sm leading-tight">

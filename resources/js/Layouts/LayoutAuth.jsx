@@ -2,7 +2,7 @@ import { ThemeProvider } from "@/Components/ThemeProvider";
 import { ThemeToggle } from "@/Components/ThemeToggle";
 import { APP_URL } from "@/constants/app";
 import { usePage } from "@inertiajs/react";
-import { GalleryVerticalEnd } from "lucide-react";
+import { GalleryVerticalEnd, Zap } from "lucide-react";
 
 export default function LayoutAuth({ children }) {
     // destructure "settings" dari props page
@@ -18,10 +18,7 @@ export default function LayoutAuth({ children }) {
                     </div>
 
                     <div className="flex w-full max-w-sm flex-col gap-6">
-                        <a
-                            href="/"
-                            className="flex items-center gap-2 self-center font-medium"
-                        >
+                        <a href="/" className="self-center font-medium">
                             {settings?.app_logo ? (
                                 <img
                                     src={
@@ -30,11 +27,11 @@ export default function LayoutAuth({ children }) {
                                         settings.app_logo
                                     }
                                     alt="App Logo"
-                                    className="flex size-6 items-center justify-center rounded-md"
+                                    className="mb-3 flex size-16 mx-auto items-center justify-center rounded-md"
                                 />
                             ) : (
-                                <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
-                                    <GalleryVerticalEnd className="size-4" />
+                                <div className="mb-3 bg-primary text-primary-foreground flex size-10 mx-auto items-center justify-center rounded-md">
+                                    <Zap className="size-8" />
                                 </div>
                             )}
                             {settings?.app_name ||
