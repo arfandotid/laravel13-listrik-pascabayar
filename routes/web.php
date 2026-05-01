@@ -15,6 +15,8 @@ Route::post('/logout', [\App\Http\Controllers\Pelanggan\Auth\LoginController::cl
 Route::group(['middleware' => ['auth:pelanggan']], function () {
     Route::get('/dashboard', [App\Http\Controllers\Pelanggan\DashboardController::class, 'index'])->name('dashboard');
     Route::get('/pembayaran', [App\Http\Controllers\Pelanggan\PembayaranController::class, 'index'])->name('pembayaran.index');
+    Route::get('/tagihan', [App\Http\Controllers\Pelanggan\TagihanController::class, 'index'])->name('tagihan.index');
+    Route::put('/tagihan/{id}', [App\Http\Controllers\Pelanggan\TagihanController::class, 'update'])->name('tagihan.update');
 });
 
 // ADMIN ROUTES

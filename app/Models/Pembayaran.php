@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
     'bulan_bayar',
     'biaya_admin',
     'total_bayar',
-    'user_id',
+    'file_bukti',
 ])]
 
 class Pembayaran extends Model

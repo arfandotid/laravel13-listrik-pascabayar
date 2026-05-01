@@ -12,6 +12,9 @@ import {
     TableBody,
     TableCell,
 } from "@/Components/BasicTable";
+import { Button } from "@/Components/ui/button";
+import { File } from "lucide-react";
+import { formatUang } from "@/lib/format-uang";
 
 export default function PembayaranIndex() {
     const { pembayaran } = usePage().props;
@@ -37,7 +40,7 @@ export default function PembayaranIndex() {
                                 <TableHead>Tgl Bayar</TableHead>
                                 <TableHead>Biaya admin</TableHead>
                                 <TableHead>Total bayar</TableHead>
-                                <TableHead>Admin</TableHead>
+                                <TableHead>File Bukti</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -59,18 +62,33 @@ export default function PembayaranIndex() {
                                             {item.bulan_bayar}
                                         </TableCell>
                                         <TableCell>
-                                            {item.biaya_admin}
+                                            {formatUang(item.biaya_admin)}
                                         </TableCell>
                                         <TableCell>
-                                            {item.total_bayar}
+                                            {formatUang(item.total_bayar)}
                                         </TableCell>
-                                        <TableCell>{item.user.name}</TableCell>
+                                        <TableCell>
+                                            {item.file_bukti && (
+                                                <a
+                                                    href={`/uploads/bukti_pembayaran/${item.file_bukti}`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                >
+                                                    <Button
+                                                        variant="outline"
+                                                        size="sm"
+                                                    >
+                                                        <File /> File Bukti
+                                                    </Button>
+                                                </a>
+                                            )}
+                                        </TableCell>
                                     </TableRow>
                                 ))
                             ) : (
                                 <TableEmpty
                                     title="Tidak ada data"
-                                    description="Silahkan tambahkan data baru"
+                                    description="Data tidak ditemukan"
                                     colSpan={7}
                                 />
                             )}

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('bulan');
             $table->integer('tahun');
             $table->integer('jumlah_meter');
+            $table->integer('jumlah_biaya');
             $table->string('status');
             $table->timestamps();
         });

@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
     'bulan',
     'tahun',
     'jumlah_meter',
+    'jumlah_biaya',
     'status'
 ])]
 

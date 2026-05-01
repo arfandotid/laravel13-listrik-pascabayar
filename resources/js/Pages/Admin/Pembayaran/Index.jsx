@@ -14,6 +14,10 @@ import {
     TableBody,
     TableCell,
 } from "@/Components/BasicTable";
+import { formatUang } from "@/lib/format-uang";
+import { NAMA_BULAN } from "@/constants/nama-bulan";
+import { Button } from "@/Components/ui/button";
+import { File } from "lucide-react";
 
 export default function PembayaranIndex() {
     const { pembayaran } = usePage().props;
@@ -39,7 +43,7 @@ export default function PembayaranIndex() {
                                 <TableHead>Tgl Bayar</TableHead>
                                 <TableHead>Biaya admin</TableHead>
                                 <TableHead>Total bayar</TableHead>
-                                <TableHead>Admin</TableHead>
+                                <TableHead>File Bukti</TableHead>
                                 <TableHead className="w-7">Aksi</TableHead>
                             </TableRow>
                         </TableHeader>
@@ -56,18 +60,34 @@ export default function PembayaranIndex() {
                                             {item.pelanggan.nama}
                                         </TableCell>
                                         <TableCell>
+                                            {NAMA_BULAN[item.bulan_bayar]}
+                                        </TableCell>
+                                        <TableCell>
                                             {item.tanggal_pembayaran}
                                         </TableCell>
                                         <TableCell>
-                                            {item.bulan_bayar}
+                                            {formatUang(item.biaya_admin)}
                                         </TableCell>
                                         <TableCell>
-                                            {item.biaya_admin}
+                                            {formatUang(item.total_bayar)}
                                         </TableCell>
+
                                         <TableCell>
-                                            {item.total_bayar}
+                                            {item.file_bukti && (
+                                                <a
+                                                    href={`/uploads/bukti_pembayaran/${item.file_bukti}`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                >
+                                                    <Button
+                                                        variant="outline"
+                                                        size="sm"
+                                                    >
+                                                        <File /> File Bukti
+                                                    </Button>
+                                                </a>
+                                            )}
                                         </TableCell>
-                                        <TableCell>{item.user.name}</TableCell>
                                         <TableCell>
                                             <div className="flex items-center space-x-2">
                                                 {hasAnyPermission([
@@ -88,7 +108,7 @@ export default function PembayaranIndex() {
                                 <TableEmpty
                                     title="Tidak ada data"
                                     description="Silahkan tambahkan data baru"
-                                    colSpan={8}
+                                    colSpan={7}
                                 />
                             )}
                         </TableBody>

@@ -7,8 +7,10 @@ use App\Models\Penggunaan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Pelanggan;
+use App\Models\Tagihan;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Support\Facades\DB;
 
 class PenggunaanController extends Controller implements HasMiddleware
 {
@@ -55,15 +57,35 @@ class PenggunaanController extends Controller implements HasMiddleware
             'meter_akhir' => 'required',
         ]);
 
-        Penggunaan::create([
-            'pelanggan_id' => $request->pelanggan_id,
-            'bulan' => $request->bulan,
-            'tahun' => $request->tahun,
-            'meter_awal' => $request->meter_awal,
-            'meter_akhir' => $request->meter_akhir,
-        ]);
+        try {
+            DB::transaction(function () use ($request) {
+                $penggunaan = Penggunaan::create([
+                    'pelanggan_id' => $request->pelanggan_id,
+                    'bulan' => $request->bulan,
+                    'tahun' => $request->tahun,
+                    'meter_awal' => $request->meter_awal,
+                    'meter_akhir' => $request->meter_akhir,
+                ]);
 
-        return redirect()->to('/admin/penggunaan')->with('success', 'Penggunaan created successfully.');
+                $pelanggan = Pelanggan::findOrFail($request->pelanggan_id);
+                $tarif = $pelanggan->tarif->tarifperkwh;
+                $jumlah_biaya = ($penggunaan->meter_akhir - $penggunaan->meter_awal) * $tarif;
+
+                Tagihan::create([
+                    'penggunaan_id' => $penggunaan->id,
+                    'pelanggan_id' => $request->pelanggan_id,
+                    'bulan' => $request->bulan,
+                    'tahun' => $request->tahun,
+                    'jumlah_meter' => $request->meter_akhir - $request->meter_awal,
+                    'jumlah_biaya' => $jumlah_biaya,
+                    'status' => 'unpaid',
+                ]);
+            });
+
+            return redirect()->to('/admin/penggunaan')->with('success', 'Penggunaan created successfully.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal: ' . $e->getMessage());
+        }
     }
 
     public function edit(Penggunaan $penggunaan)

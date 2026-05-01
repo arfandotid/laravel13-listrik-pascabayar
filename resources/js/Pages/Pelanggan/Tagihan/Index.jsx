@@ -1,11 +1,9 @@
 import { Head, Link, usePage } from "@inertiajs/react";
 import LayoutApp from "@/Layouts/LayoutApp";
-import hasAnyPermission from "@/Utils/Permission";
-import { Edit } from "lucide-react";
+import { CreditCard, File } from "lucide-react";
 import PageHeader from "@/Shared/PageHeader";
 import TableEmpty from "@/Shared/TableEmpty";
 import Search from "@/Shared/Search";
-import Delete from "@/Shared/Delete";
 import TablePagination from "@/Shared/TablePagination";
 import { Button } from "@/Components/ui/button";
 import {
@@ -17,6 +15,7 @@ import {
     TableCell,
 } from "@/Components/BasicTable";
 import { NAMA_BULAN } from "@/constants/nama-bulan";
+import DialogEdit from "./_components/DialogEdit";
 import { formatUang } from "@/lib/format-uang";
 import { BadgeTagihan } from "@/Shared/BadgeTagihan";
 
@@ -27,17 +26,10 @@ export default function TagihansIndex() {
         <>
             <Head title={"Tagihan"} />
             <LayoutApp>
-                <PageHeader
-                    showButton
-                    title="Tagihan"
-                    description="Kelola data tagihan"
-                    action="/admin/tagihan/create"
-                    actionText="Tambah Tagihan"
-                    permission="tagihan.create"
-                />
+                <PageHeader title="Tagihan" description="Bayar tagihan" />
 
                 <div className="space-y-5">
-                    <Search URL={"/admin/tagihan"} />
+                    <Search URL={"/tagihan"} />
 
                     <Table>
                         <TableHeader>
@@ -49,7 +41,9 @@ export default function TagihansIndex() {
                                 <TableHead>Jumlah meter</TableHead>
                                 <TableHead>Jumlah biaya</TableHead>
                                 <TableHead>Status</TableHead>
-                                <TableHead className="w-7">Aksi</TableHead>
+                                <TableHead className="w-7">
+                                    Upload Bukti
+                                </TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -78,31 +72,11 @@ export default function TagihansIndex() {
                                             {BadgeTagihan[item.status]}
                                         </TableCell>
                                         <TableCell>
-                                            <div className="flex items-center space-x-2">
-                                                {hasAnyPermission([
-                                                    "tagihan.edit",
-                                                ]) && (
-                                                    <Link
-                                                        href={`/admin/tagihan/${item.id}/edit`}
-                                                        title="Edit"
-                                                    >
-                                                        <Button
-                                                            size="icon"
-                                                            variant="outline"
-                                                        >
-                                                            <Edit />
-                                                        </Button>
-                                                    </Link>
-                                                )}
-                                                {hasAnyPermission([
-                                                    "tagihan.delete",
-                                                ]) && (
-                                                    <Delete
-                                                        URL={"/admin/tagihan"}
-                                                        id={item.id}
-                                                    />
-                                                )}
-                                            </div>
+                                            {item.status == "unpaid" && (
+                                                <div className="flex items-center space-x-2">
+                                                    <DialogEdit id={item.id} />
+                                                </div>
+                                            )}
                                         </TableCell>
                                     </TableRow>
                                 ))

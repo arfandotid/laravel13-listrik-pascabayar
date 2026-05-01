@@ -53,7 +53,9 @@ class TagihanController extends Controller implements HasMiddleware
             'status' => 'required',
         ]);
 
-        $penggunaan = Penggunaan::findOrFail($request->penggunaan_id);
+        $penggunaan = Penggunaan::findOrFail($request->penggunaan_id)->with('pelanggan');
+        $tarif = $penggunaan->pelanggan->tarif->tarifperkwh;
+        $jumlah_biaya = ($penggunaan->meter_akhir - $penggunaan->meter_awal) * $tarif;
 
         Tagihan::create([
             'penggunaan_id' => $request->penggunaan_id,
@@ -61,6 +63,7 @@ class TagihanController extends Controller implements HasMiddleware
             'bulan' => $penggunaan->bulan,
             'tahun' => $penggunaan->tahun,
             'jumlah_meter' => $penggunaan->meter_akhir - $penggunaan->meter_awal,
+            'jumlah_biaya' => $jumlah_biaya,
             'status' => $request->status,
         ]);
 

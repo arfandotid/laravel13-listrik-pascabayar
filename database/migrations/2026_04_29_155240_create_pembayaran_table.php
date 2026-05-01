@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('bulan_bayar');
             $table->integer('biaya_admin');
             $table->decimal('total_bayar', 15, 2);
-            $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate()->restrictOnDelete();
+            $table->string('file_bukti');
             $table->timestamps();
         });
     }

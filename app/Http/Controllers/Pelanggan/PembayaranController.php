@@ -14,15 +14,12 @@ class PembayaranController extends Controller
     {
         $pelanggan_id = Auth::guard('pelanggan')->user()->id;
         $pembayaran = Pembayaran::query()
-            ->with(['pelanggan', 'user'])
+            ->with(['pelanggan'])
             ->when(request()->q, function ($q) {
                 $q->where('tanggal_pembayaran', 'like', '%' . request()->q . '%')
                     ->orWhere('bulan_bayar', 'like', '%' . request()->q . '%')
                     ->orWhereHas('pelanggan', function ($q) {
                         $q->where('nama', 'like', '%' . request()->q . '%');
-                    })
-                    ->orWhereHas('user', function ($q) {
-                        $q->where('name', 'like', '%' . request()->q . '%');
                     });
             })
             ->where('pelanggan_id', $pelanggan_id)
