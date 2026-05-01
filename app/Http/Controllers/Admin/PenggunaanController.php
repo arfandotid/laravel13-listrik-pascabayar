@@ -28,7 +28,7 @@ class PenggunaanController extends Controller implements HasMiddleware
                 $q->where('bulan', 'like', '%' . request()->q . '%')
                     ->orWhere('tahun', 'like', '%' . request()->q . '%');
             })
-            ->latest()
+            ->orderBy('id', 'desc')
             ->paginate(5)
             ->withQueryString();
 

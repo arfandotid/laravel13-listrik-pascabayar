@@ -28,7 +28,7 @@ class TarifController extends Controller implements HasMiddleware
                 $tarif->where('daya', 'like', '%' . request()->q . '%')
                     ->orWhere('tarifperkwh', 'like', '%' . request()->q . '%');
             })
-            ->latest()
+            ->orderBy('id', 'desc')
             ->paginate(5)
             ->withQueryString();
 

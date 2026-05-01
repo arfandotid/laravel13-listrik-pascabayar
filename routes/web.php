@@ -7,8 +7,8 @@ Route::get('/', function () {
 });
 
 // route auth
-Route::get('/login', [\App\Http\Controllers\Pelanggan\Auth\LoginController::class, 'index'])->name('login')->middleware('guest');
-Route::post('/login', [\App\Http\Controllers\Pelanggan\Auth\LoginController::class, 'store'])->name('login.store')->middleware('guest');
+Route::get('/login', [\App\Http\Controllers\Pelanggan\Auth\LoginController::class, 'index'])->name('login')->middleware('guest:pelanggan');
+Route::post('/login', [\App\Http\Controllers\Pelanggan\Auth\LoginController::class, 'store'])->name('login.store')->middleware('guest:pelanggan');
 Route::post('/logout', [\App\Http\Controllers\Pelanggan\Auth\LoginController::class, 'logout'])->name('logout');
 
 // dashboard
@@ -19,8 +19,8 @@ Route::group(['middleware' => ['auth:pelanggan']], function () {
 // ADMIN ROUTES
 Route::prefix('/admin')->name('admin.')->group(function () {
     // route auth
-    Route::get('/login', [\App\Http\Controllers\Admin\Auth\LoginController::class, 'index'])->name('login')->middleware('guest');
-    Route::post('/login', [\App\Http\Controllers\Admin\Auth\LoginController::class, 'store'])->name('login.store')->middleware('guest');
+    Route::get('/login', [\App\Http\Controllers\Admin\Auth\LoginController::class, 'index'])->name('login')->middleware('guest:web');
+    Route::post('/login', [\App\Http\Controllers\Admin\Auth\LoginController::class, 'store'])->name('login.store')->middleware('guest:web');
     Route::post('/logout', [\App\Http\Controllers\Admin\Auth\LoginController::class, 'logout'])->name('logout');
 
     Route::group(['middleware' => ['auth:web']], function () {

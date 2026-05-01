@@ -28,7 +28,7 @@ class PembayaranController extends Controller implements HasMiddleware
                 $q->where('tanggal_pembayaran', 'like', '%' . request()->q . '%')
                     ->orWhere('bulan_bayar', 'like', '%' . request()->q . '%');
             })
-            ->latest()
+            ->orderBy('id', 'desc')
             ->paginate(5)
             ->withQueryString();
 

@@ -29,7 +29,7 @@ class TagihanController extends Controller implements HasMiddleware
                     ->orWhere('tahun', 'like', '%' . request()->q . '%')
                     ->orWhere('status', 'like', '%' . request()->q . '%');
             })
-            ->latest()
+            ->orderBy('id', 'desc')
             ->paginate(5)
             ->withQueryString();
 

@@ -29,7 +29,7 @@ class PelangganController extends Controller implements HasMiddleware
                     ->orWhere('email', 'like', '%' . request()->q . '%')
                     ->orWhere('no_kwh', 'like', '%' . request()->q . '%');
             })
-            ->latest()
+            ->orderBy('id', 'desc')
             ->paginate(5)
             ->withQueryString();
 
