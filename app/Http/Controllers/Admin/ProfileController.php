@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +14,7 @@ class ProfileController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return Inertia::render('Profile/Index', compact('user'));
+        return Inertia::render('Admin/Profile/Index', compact('user'));
     }
 
     public function update(Request $request)
@@ -33,15 +34,15 @@ class ProfileController extends Controller
         try {
             $user->save();
         } catch (\Exception $e) {
-            return redirect()->to('/profile')->with('error', 'Failed to update profile: ' . $e->getMessage());
+            return redirect()->to('/admin/profile')->with('error', 'Failed to update profile: ' . $e->getMessage());
         }
 
-        return redirect()->to('/profile')->with('success', 'Profile updated successfully.');
+        return redirect()->to('/admin/profile')->with('success', 'Profile updated successfully.');
     }
 
     public function changePassword()
     {
-        return Inertia::render('Profile/ChangePassword');
+        return Inertia::render('Admin/Profile/ChangePassword');
     }
 
     public function updatePassword(Request $request)
@@ -55,14 +56,14 @@ class ProfileController extends Controller
         $user = User::findOrFail($userId);
 
         if (!Hash::check($request->current_password, $user->password)) {
-            return redirect()->to('/profile/password')
+            return redirect()->to('/admin/profile/password')
                 ->withErrors(
                     ['current_password' => 'Current password is incorrect.']
                 );
         }
 
         if (Hash::check($request->password, $user->password)) {
-            return redirect()->to('/profile/password')
+            return redirect()->to('/admin/profile/password')
                 ->withErrors(
                     ['password' => 'New password must be different from current password.']
                 );
@@ -73,9 +74,9 @@ class ProfileController extends Controller
         try {
             $user->save();
         } catch (\Exception $e) {
-            return redirect()->to('/profile/password')->with('error', 'Failed to update password: ' . $e->getMessage());
+            return redirect()->to('/admin/profile/password')->with('error', 'Failed to update password: ' . $e->getMessage());
         }
 
-        return redirect()->to('/profile/password')->with('success', 'Password updated successfully.');
+        return redirect()->to('/admin/profile/password')->with('success', 'Password updated successfully.');
     }
 }

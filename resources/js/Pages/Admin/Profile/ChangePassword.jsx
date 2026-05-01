@@ -25,7 +25,7 @@ export default function ChangePassword() {
         e.preventDefault();
 
         // kirim data ke route "settings"
-        post("/profile/password", {
+        post("/admin/profile/password", {
             preserveScroll: true,
             onSuccess: () => {
                 setData({

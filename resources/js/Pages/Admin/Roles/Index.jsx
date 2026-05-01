@@ -1,34 +1,13 @@
-// import Head dan Link dari Inertia
 import { Head, Link, usePage } from "@inertiajs/react";
-
-// import LayoutApp
 import LayoutApp from "@/Layouts/LayoutApp";
-
-// import hasAnyPermission
 import hasAnyPermission from "@/Utils/Permission";
-
-// import icons
 import { Edit } from "lucide-react";
-
-// import component PageHeader
 import PageHeader from "@/Shared/PageHeader";
-
-// import component TableEmpty
 import TableEmpty from "@/Shared/TableEmpty";
-
-// import component Search
 import Search from "@/Shared/Search";
-
-// import component Delete
 import Delete from "@/Shared/Delete";
-
-// import component Button
 import { Button } from "@/Components/ui/button";
-
-// import component Pagination
 import TablePagination from "@/Shared/TablePagination";
-
-// import basic table components
 import {
     Table,
     TableHeader,
@@ -39,7 +18,6 @@ import {
 } from "@/Components/BasicTable";
 
 export default function RolesIndex() {
-    // destruct props "roles"
     const { roles } = usePage().props;
 
     return (
@@ -51,13 +29,13 @@ export default function RolesIndex() {
                     showButton
                     title="Roles"
                     description="Kelola role dan hak akses pengguna"
-                    action="/roles/create"
+                    action="/admin/roles/create"
                     actionText="Tambah Role"
                     permission="roles.create"
                 />
 
                 <div className="space-y-5">
-                    <Search URL={"/roles"} />
+                    <Search URL={"/admin/roles"} />
 
                     {/* Table */}
                     <Table>
@@ -88,7 +66,7 @@ export default function RolesIndex() {
                                                     "roles.edit",
                                                 ]) && (
                                                     <Link
-                                                        href={`/roles/${role.id}/edit`}
+                                                        href={`/admin/roles/${role.id}/edit`}
                                                         title="Edit"
                                                     >
                                                         <Button
@@ -103,7 +81,7 @@ export default function RolesIndex() {
                                                     "roles.delete",
                                                 ]) && (
                                                     <Delete
-                                                        URL={"/roles"}
+                                                        URL={"/admin/roles"}
                                                         id={role.id}
                                                     />
                                                 )}

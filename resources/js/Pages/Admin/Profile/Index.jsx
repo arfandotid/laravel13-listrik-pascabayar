@@ -1,13 +1,6 @@
-// import Head dan Inertia hooks
 import { Head, useForm, usePage } from "@inertiajs/react";
-
-// import LayoutApp
 import LayoutApp from "@/Layouts/LayoutApp";
-
-// import icons
 import { Save } from "lucide-react";
-
-// SweetAlert2
 import {
     Field,
     FieldDescription,
@@ -35,7 +28,7 @@ export default function ProfileIndex() {
         e.preventDefault();
 
         // kirim data ke route "settings"
-        post("/profile", {
+        post("/admin/profile", {
             preserveScroll: true,
         });
     };

@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Console\Attributes\Hidden;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 
@@ -15,8 +16,9 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
     'alamat',
     'tarif_id',
 ])]
+#[Hidden(['password'])]
 
-class Pelanggan extends Model
+class Pelanggan  extends Authenticatable
 {
     //
 }

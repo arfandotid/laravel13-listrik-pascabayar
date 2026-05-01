@@ -1,34 +1,13 @@
-// import Head dan Link dari Inertia
 import { Head, Link, usePage } from "@inertiajs/react";
-
-// import LayoutApp
 import LayoutApp from "@/Layouts/LayoutApp";
-
-// import hasAnyPermission
 import hasAnyPermission from "@/Utils/Permission";
-
-// import icons
 import { Edit } from "lucide-react";
-
-// import component PageHeader
 import PageHeader from "@/Shared/PageHeader";
-
-// import component TableEmpty
 import TableEmpty from "@/Shared/TableEmpty";
-
-// import component Search
 import Search from "@/Shared/Search";
-
-// import component Delete
 import Delete from "@/Shared/Delete";
-
-// Import table pagination
 import TablePagination from "@/Shared/TablePagination";
-
-// import component Button
 import { Button } from "@/Components/ui/button";
-
-// import basic table components
 import {
     Table,
     TableHeader,
@@ -51,14 +30,14 @@ export default function PermissionsIndex() {
                     showButton
                     title="Permissions"
                     description="Kelola permission untuk hak akses pengguna"
-                    action="/permissions/create"
+                    action="/admin/permissions/create"
                     actionText="Tambah Permission"
                     permission="permissions.create"
                 />
 
                 {/* Card */}
                 <div className="space-y-5">
-                    <Search URL={"/permissions"} />
+                    <Search URL={"/admin/permissions"} />
 
                     {/* Table */}
                     <Table>
@@ -85,7 +64,7 @@ export default function PermissionsIndex() {
                                                     "permissions.edit",
                                                 ]) && (
                                                     <Link
-                                                        href={`/permissions/${permission.id}/edit`}
+                                                        href={`/admin/permissions/${permission.id}/edit`}
                                                         title="Edit"
                                                     >
                                                         <Button
@@ -100,7 +79,9 @@ export default function PermissionsIndex() {
                                                     "permissions.delete",
                                                 ]) && (
                                                     <Delete
-                                                        URL={"/permissions"}
+                                                        URL={
+                                                            "/admin/permissions"
+                                                        }
                                                         id={permission.id}
                                                     />
                                                 )}

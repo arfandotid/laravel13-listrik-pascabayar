@@ -38,6 +38,9 @@ class HandleInertiaRequests extends Middleware
         // admin
         $admin = auth()->guard('web')->user();
 
+        // pelanggan
+        $pelanggan = auth()->guard('pelanggan')->user();
+
         return [
             ...parent::share($request),
             //
@@ -51,7 +54,8 @@ class HandleInertiaRequests extends Middleware
             // user authenticated
             'auth' => [
                 'user'          => $admin,
-                'permissions'   => $admin ? $admin->getPermissionArray() : []
+                'permissions'   => $admin ? $admin->getPermissionArray() : [],
+                'pelanggan'     => $pelanggan
             ],
 
             // settings
