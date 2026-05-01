@@ -19,6 +19,36 @@ export const menuItems = [
         href: "/admin/dashboard",
     },
     {
+        name: "Tarif",
+        icon: LayoutDashboard,
+        href: "/admin/tarif",
+        permissions: ["tarif.index"],
+    },
+    {
+        name: "Pelanggan",
+        icon: LayoutDashboard,
+        href: "/admin/pelanggan",
+        permissions: ["pelanggan.index"],
+    },
+    {
+        name: "Penggunaan",
+        icon: LayoutDashboard,
+        href: "/admin/penggunaan",
+        permissions: ["penggunaan.index"],
+    },
+    {
+        name: "Tagihan",
+        icon: LayoutDashboard,
+        href: "/admin/tagihan",
+        permissions: ["tagihan.index"],
+    },
+    {
+        name: "Pembayaran",
+        icon: LayoutDashboard,
+        href: "/admin/pembayaran",
+        permissions: ["pembayaran.index"],
+    },
+    {
         name: "User Management",
         icon: UserCog,
         permissions: ["roles.index", "permissions.index", "users.index"],

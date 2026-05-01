@@ -33,5 +33,30 @@ class PermissionsTableSeeder extends Seeder
         //permission settings
         Permission::create(['name' => 'settings.index', 'guard_name' => 'web']);
         Permission::create(['name' => 'settings.update', 'guard_name' => 'web']);
+
+        Permission::create(['name' => 'tarif.index', 'guard_name' => 'web']);
+        Permission::create(['name' => 'tarif.create', 'guard_name' => 'web']);
+        Permission::create(['name' => 'tarif.edit', 'guard_name' => 'web']);
+        Permission::create(['name' => 'tarif.delete', 'guard_name' => 'web']);
+
+        Permission::create(['name' => 'pelanggan.index', 'guard_name' => 'web']);
+        Permission::create(['name' => 'pelanggan.create', 'guard_name' => 'web']);
+        Permission::create(['name' => 'pelanggan.edit', 'guard_name' => 'web']);
+        Permission::create(['name' => 'pelanggan.delete', 'guard_name' => 'web']);
+
+        Permission::create(['name' => 'penggunaan.index', 'guard_name' => 'web']);
+        Permission::create(['name' => 'penggunaan.create', 'guard_name' => 'web']);
+        Permission::create(['name' => 'penggunaan.edit', 'guard_name' => 'web']);
+        Permission::create(['name' => 'penggunaan.delete', 'guard_name' => 'web']);
+
+        Permission::create(['name' => 'tagihan.index', 'guard_name' => 'web']);
+        Permission::create(['name' => 'tagihan.create', 'guard_name' => 'web']);
+        Permission::create(['name' => 'tagihan.edit', 'guard_name' => 'web']);
+        Permission::create(['name' => 'tagihan.delete', 'guard_name' => 'web']);
+
+        Permission::create(['name' => 'pembayaran.index', 'guard_name' => 'web']);
+        Permission::create(['name' => 'pembayaran.create', 'guard_name' => 'web']);
+        Permission::create(['name' => 'pembayaran.edit', 'guard_name' => 'web']);
+        Permission::create(['name' => 'pembayaran.delete', 'guard_name' => 'web']);
     }
 }

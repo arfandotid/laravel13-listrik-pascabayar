@@ -44,5 +44,12 @@ Route::prefix('/admin')->name('admin.')->group(function () {
         Route::resource('/permissions', App\Http\Controllers\Admin\PermissionController::class);
         Route::resource('/roles', App\Http\Controllers\Admin\RoleController::class);
         Route::resource('/users', App\Http\Controllers\Admin\UserController::class);
+
+        // Buatkan CRUD Admin
+        Route::resource('/tarif', App\Http\Controllers\Admin\TarifController::class);
+        Route::resource('/pelanggan', App\Http\Controllers\Admin\PelangganController::class);
+        Route::resource('/penggunaan', App\Http\Controllers\Admin\PenggunaanController::class);
+        Route::resource('/tagihan', App\Http\Controllers\Admin\TagihanController::class);
+        Route::resource('/pembayaran', App\Http\Controllers\Admin\PembayaranController::class);
     });
 });
