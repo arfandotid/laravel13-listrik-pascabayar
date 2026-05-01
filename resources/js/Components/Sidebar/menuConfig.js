@@ -9,6 +9,11 @@ import {
     Key,
     Shield,
     LayoutDashboard,
+    FileExclamationPoint,
+    UserStar,
+    Zap,
+    BadgePercent,
+    Wallet,
 } from "lucide-react";
 
 // Menu items dengan permission check
@@ -20,31 +25,31 @@ export const menuItems = [
     },
     {
         name: "Tarif",
-        icon: LayoutDashboard,
+        icon: BadgePercent,
         href: "/admin/tarif",
         permissions: ["tarif.index"],
     },
     {
         name: "Pelanggan",
-        icon: LayoutDashboard,
+        icon: UserStar,
         href: "/admin/pelanggan",
         permissions: ["pelanggan.index"],
     },
     {
         name: "Penggunaan",
-        icon: LayoutDashboard,
+        icon: Zap,
         href: "/admin/penggunaan",
         permissions: ["penggunaan.index"],
     },
     {
         name: "Tagihan",
-        icon: LayoutDashboard,
+        icon: FileExclamationPoint,
         href: "/admin/tagihan",
         permissions: ["tagihan.index"],
     },
     {
         name: "Pembayaran",
-        icon: LayoutDashboard,
+        icon: Wallet,
         href: "/admin/pembayaran",
         permissions: ["pembayaran.index"],
     },
