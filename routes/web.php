@@ -14,6 +14,7 @@ Route::post('/logout', [\App\Http\Controllers\Pelanggan\Auth\LoginController::cl
 // dashboard
 Route::group(['middleware' => ['auth:pelanggan']], function () {
     Route::get('/dashboard', [App\Http\Controllers\Pelanggan\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/pembayaran', [App\Http\Controllers\Pelanggan\PembayaranController::class, 'index'])->name('pembayaran.index');
 });
 
 // ADMIN ROUTES
