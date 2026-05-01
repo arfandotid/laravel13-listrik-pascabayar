@@ -41,7 +41,7 @@ export default function TarifsIndex() {
                             <TableRow>
                                 <TableHead>No.</TableHead>
                                 <TableHead>Daya</TableHead>
-                                <TableHead>Tarifperkwh</TableHead>
+                                <TableHead>Tarif Per Kwh</TableHead>
                                 <TableHead className="w-7">Aksi</TableHead>
                             </TableRow>
                         </TableHeader>

@@ -16,6 +16,7 @@ import {
     TableBody,
     TableCell,
 } from "@/Components/BasicTable";
+import { NAMA_BULAN } from "@/constants/nama-bulan";
 
 export default function TagihansIndex() {
     const { tagihan } = usePage().props;
@@ -40,8 +41,7 @@ export default function TagihansIndex() {
                         <TableHeader>
                             <TableRow>
                                 <TableHead>No.</TableHead>
-                                <TableHead>Penggunaan id</TableHead>
-                                <TableHead>Pelanggan id</TableHead>
+                                <TableHead>Pelanggan</TableHead>
                                 <TableHead>Bulan</TableHead>
                                 <TableHead>Tahun</TableHead>
                                 <TableHead>Jumlah meter</TableHead>
@@ -59,12 +59,11 @@ export default function TagihansIndex() {
                                                     tagihan.per_page}
                                         </TableCell>
                                         <TableCell>
-                                            {item.penggunaan_id}
+                                            {item.pelanggan?.nama || "N/A"}
                                         </TableCell>
                                         <TableCell>
-                                            {item.pelanggan_id}
+                                            {NAMA_BULAN[item.bulan]}
                                         </TableCell>
-                                        <TableCell>{item.bulan}</TableCell>
                                         <TableCell>{item.tahun}</TableCell>
                                         <TableCell>
                                             {item.jumlah_meter}
@@ -76,7 +75,7 @@ export default function TagihansIndex() {
                                                     "tagihan.edit",
                                                 ]) && (
                                                     <Link
-                                                        href={`/admin/tagihans/${item.id}/edit`}
+                                                        href={`/admin/tagihan/${item.id}/edit`}
                                                         title="Edit"
                                                     >
                                                         <Button
@@ -103,7 +102,7 @@ export default function TagihansIndex() {
                                 <TableEmpty
                                     title="Tidak ada data"
                                     description="Silahkan tambahkan data baru"
-                                    colSpan={8}
+                                    colSpan={7}
                                 />
                             )}
                         </TableBody>

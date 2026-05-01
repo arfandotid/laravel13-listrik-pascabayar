@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use App\Models\Tagihan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Penggunaan;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
 
@@ -41,26 +42,25 @@ class TagihanController extends Controller implements HasMiddleware
 
     public function create()
     {
-        return Inertia::render('Admin/Tagihan/Create');
+        $penggunaan = Penggunaan::with('pelanggan')->doesntHave('tagihan')->get();
+        return Inertia::render('Admin/Tagihan/Create', compact('penggunaan'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'penggunaan_id' => 'required',
-            'pelanggan_id' => 'required',
-            'bulan' => 'required',
-            'tahun' => 'required',
-            'jumlah_meter' => 'required',
             'status' => 'required',
         ]);
 
+        $penggunaan = Penggunaan::findOrFail($request->penggunaan_id);
+
         Tagihan::create([
             'penggunaan_id' => $request->penggunaan_id,
-            'pelanggan_id' => $request->pelanggan_id,
-            'bulan' => $request->bulan,
-            'tahun' => $request->tahun,
-            'jumlah_meter' => $request->jumlah_meter,
+            'pelanggan_id' => $penggunaan->pelanggan_id,
+            'bulan' => $penggunaan->bulan,
+            'tahun' => $penggunaan->tahun,
+            'jumlah_meter' => $penggunaan->meter_akhir - $penggunaan->meter_awal,
             'status' => $request->status,
         ]);
 
@@ -75,20 +75,10 @@ class TagihanController extends Controller implements HasMiddleware
     public function update(Request $request, Tagihan $tagihan)
     {
         $request->validate([
-            'penggunaan_id' => 'required',
-            'pelanggan_id' => 'required',
-            'bulan' => 'required',
-            'tahun' => 'required',
-            'jumlah_meter' => 'required',
             'status' => 'required',
         ]);
 
         $tagihan->update([
-            'penggunaan_id' => $request->penggunaan_id,
-            'pelanggan_id' => $request->pelanggan_id,
-            'bulan' => $request->bulan,
-            'tahun' => $request->tahun,
-            'jumlah_meter' => $request->jumlah_meter,
             'status' => $request->status,
         ]);
 
