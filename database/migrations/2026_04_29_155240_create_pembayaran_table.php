@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('tanggal_pembayaran');
             $table->string('bulan_bayar');
             $table->integer('biaya_admin');
-            $table->integer('total_bayar');
+            $table->decimal('total_bayar', 15, 2);
             $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate()->restrictOnDelete();
             $table->timestamps();
         });

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 #[Table('pelanggan')]
 #[Fillable([
     'nama',
+    'email',
     'username',
     'password',
     'no_kwh',

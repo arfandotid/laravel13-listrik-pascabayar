@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('tarif', function (Blueprint $table) {
             $table->id();
             $table->integer('daya');
-            $table->integer('tarifperkwh');
+            $table->decimal('tarifperkwh', 15, 2);
             $table->timestamps();
         });
     }

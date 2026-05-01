@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('pelanggan', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
+            $table->string('email')->unique();
             $table->string('username')->unique();
             $table->string('password');
             $table->string('no_kwh')->unique();

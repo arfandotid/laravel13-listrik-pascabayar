@@ -29,7 +29,7 @@ class LoginController extends Controller
             'password' => $request->password
         ];
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::guard('pelanggan')->attempt($credentials)) {
             $request->session()->regenerate();
             return redirect()->to('/dashboard');
         }
@@ -41,7 +41,7 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
-        Auth::logout();
+        Auth::guard('pelanggan')->logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();

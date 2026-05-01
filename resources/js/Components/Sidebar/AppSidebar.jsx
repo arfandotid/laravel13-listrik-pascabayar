@@ -1,6 +1,6 @@
 "use client";
 
-import { Command, Zap } from "lucide-react";
+import { Zap } from "lucide-react";
 import {
     Sidebar,
     SidebarContent,
@@ -14,6 +14,8 @@ import { NavMain } from "./NavMain";
 import { NavUser } from "./NavUser";
 import { usePage } from "@inertiajs/react";
 import { APP_URL } from "@/constants/app";
+import { NavUserPelanggan } from "./NavUserPelanggan";
+import { NavMainPelanggan } from "./NavMainPelanggan";
 
 export function AppSidebar({ auth, ...props }) {
     // destructure "settings" dari props page
@@ -53,10 +55,14 @@ export function AppSidebar({ auth, ...props }) {
                 </SidebarMenu>
             </SidebarHeader>
             <SidebarContent>
-                <NavMain />
+                {auth.pelanggan ? <NavMainPelanggan /> : <NavMain />}
             </SidebarContent>
             <SidebarFooter>
-                <NavUser auth={auth} />
+                {auth.pelanggan ? (
+                    <NavUserPelanggan auth={auth} />
+                ) : (
+                    <NavUser auth={auth} />
+                )}
             </SidebarFooter>
         </Sidebar>
     );
