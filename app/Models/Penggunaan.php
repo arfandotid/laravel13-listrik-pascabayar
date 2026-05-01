@@ -17,5 +17,8 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 
 class Penggunaan extends Model
 {
-    //
+    public function pelanggan()
+    {
+        return $this->belongsTo(Pelanggan::class, 'pelanggan_id');
+    }
 }

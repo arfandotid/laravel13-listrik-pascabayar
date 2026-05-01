@@ -18,5 +18,13 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 
 class Tagihan extends Model
 {
-    //
+    public function penggunaan()
+    {
+        return $this->belongsTo(Penggunaan::class, 'penggunaan_id');
+    }
+
+    public function pelanggan()
+    {
+        return $this->belongsTo(Pelanggan::class, 'pelanggan_id');
+    }
 }

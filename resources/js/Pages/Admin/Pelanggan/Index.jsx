@@ -43,10 +43,9 @@ export default function PelangganIndex() {
                                 <TableHead>Nama</TableHead>
                                 <TableHead>Email</TableHead>
                                 <TableHead>Username</TableHead>
-                                <TableHead>Password</TableHead>
-                                <TableHead>No kwh</TableHead>
                                 <TableHead>Alamat</TableHead>
-                                <TableHead>Tarif id</TableHead>
+                                <TableHead>No kwh</TableHead>
+                                <TableHead>Daya</TableHead>
                                 <TableHead className="w-7">Aksi</TableHead>
                             </TableRow>
                         </TableHeader>
@@ -62,10 +61,9 @@ export default function PelangganIndex() {
                                         <TableCell>{item.nama}</TableCell>
                                         <TableCell>{item.email}</TableCell>
                                         <TableCell>{item.username}</TableCell>
-                                        <TableCell>{item.password}</TableCell>
-                                        <TableCell>{item.no_kwh}</TableCell>
                                         <TableCell>{item.alamat}</TableCell>
-                                        <TableCell>{item.tarif_id}</TableCell>
+                                        <TableCell>{item.no_kwh}</TableCell>
+                                        <TableCell>{item.tarif.daya}</TableCell>
                                         <TableCell>
                                             <div className="flex items-center space-x-2">
                                                 {hasAnyPermission([
@@ -99,7 +97,7 @@ export default function PelangganIndex() {
                                 <TableEmpty
                                     title="Tidak ada data"
                                     description="Silahkan tambahkan data baru"
-                                    colSpan={9}
+                                    colSpan={8}
                                 />
                             )}
                         </TableBody>

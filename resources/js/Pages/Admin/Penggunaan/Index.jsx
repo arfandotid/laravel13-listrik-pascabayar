@@ -16,6 +16,7 @@ import {
     TableBody,
     TableCell,
 } from "@/Components/BasicTable";
+import { NAMA_BULAN } from "@/constants/nama-bulan";
 
 export default function PenggunaansIndex() {
     const { penggunaan } = usePage().props;
@@ -40,7 +41,7 @@ export default function PenggunaansIndex() {
                         <TableHeader>
                             <TableRow>
                                 <TableHead>No.</TableHead>
-                                <TableHead>Pelanggan id</TableHead>
+                                <TableHead>Pelanggan</TableHead>
                                 <TableHead>Bulan</TableHead>
                                 <TableHead>Tahun</TableHead>
                                 <TableHead>Meter awal</TableHead>
@@ -58,9 +59,11 @@ export default function PenggunaansIndex() {
                                                     penggunaan.per_page}
                                         </TableCell>
                                         <TableCell>
-                                            {item.pelanggan_id}
+                                            {item.pelanggan.nama}
                                         </TableCell>
-                                        <TableCell>{item.bulan}</TableCell>
+                                        <TableCell>
+                                            {NAMA_BULAN[item.bulan]}
+                                        </TableCell>
                                         <TableCell>{item.tahun}</TableCell>
                                         <TableCell>{item.meter_awal}</TableCell>
                                         <TableCell>

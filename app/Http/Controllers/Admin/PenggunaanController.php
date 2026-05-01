@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use App\Models\Penggunaan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Pelanggan;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
 
@@ -24,6 +25,7 @@ class PenggunaanController extends Controller implements HasMiddleware
     public function index()
     {
         $penggunaan = Penggunaan::query()
+            ->with('pelanggan')
             ->when(request()->q, function ($q) {
                 $q->where('bulan', 'like', '%' . request()->q . '%')
                     ->orWhere('tahun', 'like', '%' . request()->q . '%');
@@ -39,7 +41,8 @@ class PenggunaanController extends Controller implements HasMiddleware
 
     public function create()
     {
-        return Inertia::render('Admin/Penggunaan/Create');
+        $pelanggan = Pelanggan::select('id', 'nama', 'no_kwh')->get();
+        return Inertia::render('Admin/Penggunaan/Create', compact('pelanggan'));
     }
 
     public function store(Request $request)
@@ -65,7 +68,8 @@ class PenggunaanController extends Controller implements HasMiddleware
 
     public function edit(Penggunaan $penggunaan)
     {
-        return Inertia::render('Admin/Penggunaan/Edit', compact('penggunaan'));
+        $pelanggan = Pelanggan::select('id', 'nama', 'no_kwh')->get();
+        return Inertia::render('Admin/Penggunaan/Edit', compact('penggunaan', 'pelanggan'));
     }
 
     public function update(Request $request, Penggunaan $penggunaan)

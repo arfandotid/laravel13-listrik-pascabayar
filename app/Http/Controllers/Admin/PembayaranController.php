@@ -24,6 +24,7 @@ class PembayaranController extends Controller implements HasMiddleware
     public function index()
     {
         $pembayaran = Pembayaran::query()
+            ->with(['tagihan', 'pelanggan'])
             ->when(request()->q, function ($q) {
                 $q->where('tanggal_pembayaran', 'like', '%' . request()->q . '%')
                     ->orWhere('bulan_bayar', 'like', '%' . request()->q . '%');

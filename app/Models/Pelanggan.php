@@ -21,5 +21,8 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 
 class Pelanggan  extends Authenticatable
 {
-    //
+    public function tarif()
+    {
+        return $this->belongsTo(Tarif::class, 'tarif_id');
+    }
 }

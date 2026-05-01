@@ -24,6 +24,7 @@ class TagihanController extends Controller implements HasMiddleware
     public function index()
     {
         $tagihan = Tagihan::query()
+            ->with(['penggunaan', 'pelanggan'])
             ->when(request()->q, function ($q) {
                 $q->where('bulan', 'like', '%' . request()->q . '%')
                     ->orWhere('tahun', 'like', '%' . request()->q . '%')

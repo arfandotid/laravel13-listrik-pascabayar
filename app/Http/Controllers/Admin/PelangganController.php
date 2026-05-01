@@ -24,6 +24,7 @@ class PelangganController extends Controller implements HasMiddleware
     public function index()
     {
         $pelanggan = Pelanggan::query()
+            ->with('tarif')
             ->when(request()->q, function ($q) {
                 $q->where('nama', 'like', '%' . request()->q . '%')
                     ->orWhere('email', 'like', '%' . request()->q . '%')
