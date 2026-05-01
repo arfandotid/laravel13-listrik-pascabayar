@@ -1,13 +1,11 @@
-import { Head, Link, usePage } from "@inertiajs/react";
+import { Head, usePage } from "@inertiajs/react";
 import LayoutApp from "@/Layouts/LayoutApp";
 import hasAnyPermission from "@/Utils/Permission";
-import { Edit } from "lucide-react";
 import PageHeader from "@/Shared/PageHeader";
 import TableEmpty from "@/Shared/TableEmpty";
 import Search from "@/Shared/Search";
 import Delete from "@/Shared/Delete";
 import TablePagination from "@/Shared/TablePagination";
-import { Button } from "@/Components/ui/button";
 import {
     Table,
     TableHeader,
@@ -25,12 +23,8 @@ export default function PembayaranIndex() {
             <Head title={"Pembayaran"} />
             <LayoutApp>
                 <PageHeader
-                    showButton
                     title="Pembayaran"
                     description="Kelola data pembayaran"
-                    action="/admin/pembayaran/create"
-                    actionText="Tambah Pembayaran"
-                    permission="pembayaran.create"
                 />
 
                 <div className="space-y-5">
@@ -40,13 +34,12 @@ export default function PembayaranIndex() {
                         <TableHeader>
                             <TableRow>
                                 <TableHead>No.</TableHead>
-                                <TableHead>Tagihan id</TableHead>
-                                <TableHead>Pelanggan id</TableHead>
-                                <TableHead>Tanggal pembayaran</TableHead>
+                                <TableHead>Pelanggan</TableHead>
                                 <TableHead>Bulan bayar</TableHead>
+                                <TableHead>Tgl Bayar</TableHead>
                                 <TableHead>Biaya admin</TableHead>
                                 <TableHead>Total bayar</TableHead>
-                                <TableHead>User id</TableHead>
+                                <TableHead>Admin</TableHead>
                                 <TableHead className="w-7">Aksi</TableHead>
                             </TableRow>
                         </TableHeader>
@@ -59,9 +52,8 @@ export default function PembayaranIndex() {
                                                 (pembayaran.current_page - 1) *
                                                     pembayaran.per_page}
                                         </TableCell>
-                                        <TableCell>{item.tagihan_id}</TableCell>
                                         <TableCell>
-                                            {item.pelanggan_id}
+                                            {item.pelanggan.nama}
                                         </TableCell>
                                         <TableCell>
                                             {item.tanggal_pembayaran}
@@ -75,24 +67,9 @@ export default function PembayaranIndex() {
                                         <TableCell>
                                             {item.total_bayar}
                                         </TableCell>
-                                        <TableCell>{item.user_id}</TableCell>
+                                        <TableCell>{item.user.name}</TableCell>
                                         <TableCell>
                                             <div className="flex items-center space-x-2">
-                                                {hasAnyPermission([
-                                                    "pembayaran.edit",
-                                                ]) && (
-                                                    <Link
-                                                        href={`/admin/pembayaran/${item.id}/edit`}
-                                                        title="Edit"
-                                                    >
-                                                        <Button
-                                                            size="icon"
-                                                            variant="outline"
-                                                        >
-                                                            <Edit />
-                                                        </Button>
-                                                    </Link>
-                                                )}
                                                 {hasAnyPermission([
                                                     "pembayaran.delete",
                                                 ]) && (
@@ -111,7 +88,7 @@ export default function PembayaranIndex() {
                                 <TableEmpty
                                     title="Tidak ada data"
                                     description="Silahkan tambahkan data baru"
-                                    colSpan={9}
+                                    colSpan={8}
                                 />
                             )}
                         </TableBody>

@@ -55,8 +55,6 @@ class PermissionsTableSeeder extends Seeder
         Permission::create(['name' => 'tagihan.delete', 'guard_name' => 'web']);
 
         Permission::create(['name' => 'pembayaran.index', 'guard_name' => 'web']);
-        Permission::create(['name' => 'pembayaran.create', 'guard_name' => 'web']);
-        Permission::create(['name' => 'pembayaran.edit', 'guard_name' => 'web']);
         Permission::create(['name' => 'pembayaran.delete', 'guard_name' => 'web']);
     }
 }
