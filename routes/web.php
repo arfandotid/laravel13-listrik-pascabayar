@@ -44,15 +44,15 @@ Route::prefix('/admin')->name('admin.')->group(function () {
         Route::delete('/settings/delete-logo', [App\Http\Controllers\Admin\SettingController::class, 'deleteLogo'])->name('settings.delete-logo');
 
         // route user management
-        Route::resource('/permissions', App\Http\Controllers\Admin\PermissionController::class);
-        Route::resource('/roles', App\Http\Controllers\Admin\RoleController::class);
-        Route::resource('/users', App\Http\Controllers\Admin\UserController::class);
+        Route::resource('/permissions', App\Http\Controllers\Admin\PermissionController::class)->except(['show']);
+        Route::resource('/roles', App\Http\Controllers\Admin\RoleController::class)->except(['show']);
+        Route::resource('/users', App\Http\Controllers\Admin\UserController::class)->except(['show']);
 
         // Buatkan CRUD Admin
-        Route::resource('/tarif', App\Http\Controllers\Admin\TarifController::class);
-        Route::resource('/pelanggan', App\Http\Controllers\Admin\PelangganController::class);
-        Route::resource('/penggunaan', App\Http\Controllers\Admin\PenggunaanController::class);
-        Route::resource('/tagihan', App\Http\Controllers\Admin\TagihanController::class);
-        Route::resource('/pembayaran', App\Http\Controllers\Admin\PembayaranController::class);
+        Route::resource('/tarif', App\Http\Controllers\Admin\TarifController::class)->except(['show']);
+        Route::resource('/pelanggan', App\Http\Controllers\Admin\PelangganController::class)->except(['show']);
+        Route::resource('/penggunaan', App\Http\Controllers\Admin\PenggunaanController::class)->except(['show']);
+        Route::resource('/tagihan', App\Http\Controllers\Admin\TagihanController::class)->except(['show']);
+        Route::resource('/pembayaran', App\Http\Controllers\Admin\PembayaranController::class)->except(['show']);
     });
 });

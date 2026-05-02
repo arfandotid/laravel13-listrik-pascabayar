@@ -1,0 +1,1556 @@
+openapi: 3.0.3
+info:
+  title: 'Aplikasi Pembayaran Listrik Pascabayar API Documentation'
+  description: ''
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost:8000'
+tags:
+  -
+    name: Endpoints
+    description: ''
+paths:
+  /admin/login:
+    get:
+      summary: 'Menampilkan halaman login admin.'
+      operationId: menampilkanHalamanLoginAdmin
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "<!DOCTYPE html>\n<html>\n\n<head>\n    <meta charset=\"utf-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0\" />\n    <link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css?family=Geist:400,500,600,700&display=swap\">\n    <script type=\"module\" >\n    import RefreshRuntime from 'http://127.0.0.1:5173/@react-refresh'\n    RefreshRuntime.injectIntoGlobalHook(window)\n    window.$RefreshReg$ = () => {}\n    window.$RefreshSig$ = () => (type) => type\n    window.__vite_plugin_react_preamble_installed__ = true\n</script>    <script type=\"module\" src=\"http://127.0.0.1:5173/@vite/client\"></script><script type=\"module\" src=\"http://127.0.0.1:5173/resources/js/app.jsx\"></script><link rel=\"stylesheet\" href=\"http://127.0.0.1:5173/resources/css/app.css\" />        <style>\n        body {\n            font-family: 'Geist', sans-serif;\n        }\n    </style>\n</head>\n\n<body>\n\n    <div id=\"app\" data-page=\"{&quot;component&quot;:&quot;Admin\\/Auth\\/Login&quot;,&quot;props&quot;:{&quot;errors&quot;:{},&quot;flash&quot;:{&quot;success&quot;:null,&quot;error&quot;:null},&quot;auth&quot;:{&quot;user&quot;:null,&quot;permissions&quot;:[],&quot;pelanggan&quot;:null},&quot;settings&quot;:{&quot;id&quot;:1,&quot;app_name&quot;:&quot;Aplikasi Pembayaran Listrik Pascabayar&quot;,&quot;app_logo&quot;:null,&quot;created_at&quot;:&quot;2026-05-01T10:13:11.000000Z&quot;,&quot;updated_at&quot;:&quot;2026-05-01T10:13:11.000000Z&quot;}},&quot;url&quot;:&quot;\\/admin\\/login&quot;,&quot;version&quot;:&quot;95c58b7e9b8a4b96335900e74a418bc8&quot;,&quot;clearHistory&quot;:false,&quot;encryptHistory&quot;:false}\"></div>\n</body>\n\n</html>\n"
+      tags:
+        - Endpoints
+      security: []
+    post:
+      summary: 'Memproses login admin.'
+      operationId: memprosesLoginAdmin
+      description: "Mendukung login menggunakan:\n- email\n- username"
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                login:
+                  type: string
+                  description: 'Email atau username.'
+                  example: architecto
+                password:
+                  type: string
+                  description: 'Password pengguna.'
+                  example: '|]|{+-'
+              required:
+                - login
+                - password
+      security: []
+  /admin/logout:
+    post:
+      summary: 'Memproses logout admin.'
+      operationId: memprosesLogoutAdmin
+      description: 'Menghapus session dan token keamanan.'
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  /admin/dashboard:
+    get:
+      summary: 'Menampilkan halaman dashboard dengan data tren tahunan.'
+      operationId: menampilkanHalamanDashboardDenganDataTrenTahunan
+      description: "Method ini mengambil data akumulasi 'jumlah_meter' dari tabel tagihan,\nmengelompokkannya berdasarkan tahun dan bulan, serta mengambil daftar tahun\nyang tersedia untuk filter pada sisi klien (Inertia)."
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+  /admin/profile:
+    get:
+      summary: 'Menampilkan halaman profil pengguna.'
+      operationId: menampilkanHalamanProfilPengguna
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+    put:
+      summary: 'Memperbarui informasi profil pengguna.'
+      operationId: memperbaruiInformasiProfilPengguna
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: b
+                email:
+                  type: string
+                  description: ''
+                  example: null
+                username:
+                  type: string
+                  description: ''
+                  example: null
+              required:
+                - name
+      security: []
+  /admin/profile/password:
+    get:
+      summary: 'Menampilkan halaman untuk mengubah password pengguna.'
+      operationId: menampilkanHalamanUntukMengubahPasswordPengguna
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+    put:
+      summary: 'Memperbarui password pengguna setelah validasi.'
+      operationId: memperbaruiPasswordPenggunaSetelahValidasi
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                current_password:
+                  type: string
+                  description: ''
+                  example: architecto
+                password:
+                  type: string
+                  description: 'Must be at least 8 characters.'
+                  example: ']|{+-0pBNvYg'
+              required:
+                - current_password
+                - password
+      security: []
+  /admin/settings:
+    get:
+      summary: ''
+      operationId: getAdminSettings
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+    put:
+      summary: ''
+      operationId: putAdminSettings
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                app_name:
+                  type: string
+                  description: ''
+                  example: architecto
+                app_logo:
+                  type: string
+                  description: ''
+                  example: null
+                  nullable: true
+              required:
+                - app_name
+      security: []
+  /admin/settings/delete-logo:
+    delete:
+      summary: "Menghapus logo aplikasi dari penyimpanan dan memperbarui data setting untuk mengosongkan field logo,\nkemudian kembali ke halaman pengaturan dengan pesan sukses."
+      operationId: menghapusLogoAplikasiDariPenyimpananDanMemperbaruiDataSettingUntukMengosongkanFieldLogoKemudianKembaliKeHalamanPengaturanDenganPesanSukses
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  /admin/permissions:
+    get:
+      summary: 'Menampilkan daftar permission.'
+      operationId: menampilkanDaftarPermission
+      description: 'Mendukung pencarian dan pagination.'
+      parameters:
+        -
+          in: query
+          name: q
+          description: 'Opsional. Nama permission.'
+          example: architecto
+          required: false
+          schema:
+            type: string
+            description: 'Opsional. Nama permission.'
+            example: architecto
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+    post:
+      summary: 'Menyimpan permission baru.'
+      operationId: menyimpanPermissionBaru
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Nama permission (unik).'
+                  example: architecto
+              required:
+                - name
+      security: []
+  /admin/permissions/create:
+    get:
+      summary: 'Menampilkan form pembuatan permission.'
+      operationId: menampilkanFormPembuatanPermission
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+  '/admin/permissions/{permission_id}/edit':
+    get:
+      summary: 'Menampilkan form edit permission.'
+      operationId: menampilkanFormEditPermission
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: permission_id
+        description: 'The ID of the permission.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+  '/admin/permissions/{id}':
+    put:
+      summary: 'Memperbarui permission.'
+      operationId: memperbaruiPermission
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: ''
+                  example: null
+      security: []
+    delete:
+      summary: 'Menghapus permission.'
+      operationId: menghapusPermission
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the permission.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+  /admin/roles:
+    get:
+      summary: ''
+      operationId: getAdminRoles
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+    post:
+      summary: ''
+      operationId: postAdminRoles
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: ''
+                  example: architecto
+                permissions:
+                  type: array
+                  description: 'The <code>id</code> of an existing record in the permissions table.'
+                  example: null
+                  items:
+                    type: string
+              required:
+                - name
+      security: []
+  /admin/roles/create:
+    get:
+      summary: ''
+      operationId: getAdminRolesCreate
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+  '/admin/roles/{role_id}/edit':
+    get:
+      summary: ''
+      operationId: getAdminRolesRole_idEdit
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: role_id
+        description: 'The ID of the role.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+  '/admin/roles/{id}':
+    put:
+      summary: ''
+      operationId: putAdminRolesId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: ''
+                  example: null
+                permissions:
+                  type: array
+                  description: 'The <code>id</code> of an existing record in the permissions table.'
+                  example: null
+                  items:
+                    type: string
+      security: []
+    delete:
+      summary: ''
+      operationId: deleteAdminRolesId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the role.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+  /admin/users:
+    get:
+      summary: 'Menampilkan daftar pengguna.'
+      operationId: menampilkanDaftarPengguna
+      description: 'Mendukung pencarian berdasarkan nama dan email serta pagination.'
+      parameters:
+        -
+          in: query
+          name: q
+          description: 'Opsional. Kata kunci pencarian.'
+          example: architecto
+          required: false
+          schema:
+            type: string
+            description: 'Opsional. Kata kunci pencarian.'
+            example: architecto
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+    post:
+      summary: 'Menyimpan data pengguna baru.'
+      operationId: menyimpanDataPenggunaBaru
+      description: 'Termasuk assign role ke pengguna.'
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Nama pengguna.'
+                  example: architecto
+                email:
+                  type: string
+                  description: 'Email unik.'
+                  example: gbailey@example.net
+                username:
+                  type: string
+                  description: 'Username unik.'
+                  example: architecto
+                password:
+                  type: string
+                  description: 'Minimal 8 karakter.'
+                  example: '|]|{+-'
+                roles:
+                  type: array
+                  description: 'Array ID role.'
+                  example:
+                    - architecto
+                  items:
+                    type: string
+              required:
+                - name
+                - email
+                - username
+                - password
+                - roles
+      security: []
+  /admin/users/create:
+    get:
+      summary: 'Menampilkan form pembuatan pengguna.'
+      operationId: menampilkanFormPembuatanPengguna
+      description: 'Mengirim daftar role yang tersedia.'
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+  '/admin/users/{user_id}/edit':
+    get:
+      summary: 'Menampilkan form edit pengguna.'
+      operationId: menampilkanFormEditPengguna
+      description: "Mengirim:\n- data user\n- daftar role\n- role yang sudah dimiliki user"
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: user_id
+        description: 'The ID of the user.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+  '/admin/users/{id}':
+    put:
+      summary: 'Memperbarui data pengguna.'
+      operationId: memperbaruiDataPengguna
+      description: "Jika password diisi, maka password akan diperbarui.\nRole pengguna akan disinkronisasi ulang."
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Nama pengguna.'
+                  example: architecto
+                email:
+                  type: string
+                  description: 'Email unik.'
+                  example: gbailey@example.net
+                username:
+                  type: string
+                  description: 'Username unik.'
+                  example: architecto
+                password:
+                  type: string
+                  description: 'Opsional Minimal 8 karakter.'
+                  example: '|]|{+-'
+                  nullable: true
+                roles:
+                  type: array
+                  description: 'Array ID role.'
+                  example:
+                    - architecto
+                  items:
+                    type: string
+              required:
+                - name
+                - email
+                - username
+                - roles
+      security: []
+    delete:
+      summary: 'Menghapus data pengguna.'
+      operationId: menghapusDataPengguna
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the user.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+  /admin/tarif:
+    get:
+      summary: 'Menampilkan daftar tarif listrik.'
+      operationId: menampilkanDaftarTarifListrik
+      description: 'Mendukung pencarian berdasarkan daya dan tarif per KWH.'
+      parameters:
+        -
+          in: query
+          name: q
+          description: 'Opsional. Kata kunci pencarian.'
+          example: architecto
+          required: false
+          schema:
+            type: string
+            description: 'Opsional. Kata kunci pencarian.'
+            example: architecto
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+    post:
+      summary: 'Menyimpan data tarif baru.'
+      operationId: menyimpanDataTarifBaru
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                daya:
+                  type: integer
+                  description: 'Daya listrik (VA).'
+                  example: 16
+                tarifperkwh:
+                  type: number
+                  description: 'Tarif per KWH.'
+                  example: 4326.41688
+              required:
+                - daya
+                - tarifperkwh
+      security: []
+  /admin/tarif/create:
+    get:
+      summary: 'Menampilkan form pembuatan tarif.'
+      operationId: menampilkanFormPembuatanTarif
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+  '/admin/tarif/{tarif_id}/edit':
+    get:
+      summary: 'Menampilkan form edit tarif.'
+      operationId: menampilkanFormEditTarif
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: tarif_id
+        description: 'The ID of the tarif.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+  '/admin/tarif/{id}':
+    put:
+      summary: 'Memperbarui data tarif.'
+      operationId: memperbaruiDataTarif
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                daya:
+                  type: integer
+                  description: 'Daya listrik (VA).'
+                  example: 16
+                tarifperkwh:
+                  type: number
+                  description: 'Tarif per KWH.'
+                  example: 4326.41688
+              required:
+                - daya
+                - tarifperkwh
+      security: []
+    delete:
+      summary: 'Menghapus data tarif.'
+      operationId: menghapusDataTarif
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the tarif.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+  /admin/pelanggan:
+    get:
+      summary: 'Menampilkan daftar pelanggan.'
+      operationId: menampilkanDaftarPelanggan
+      description: "Menyediakan data pelanggan dengan fitur:\n- Pencarian berdasarkan nama, email, atau nomor KWH\n- Pagination"
+      parameters:
+        -
+          in: query
+          name: q
+          description: 'Opsional. Kata kunci pencarian.'
+          example: architecto
+          required: false
+          schema:
+            type: string
+            description: 'Opsional. Kata kunci pencarian.'
+            example: architecto
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+    post:
+      summary: 'Menyimpan data pelanggan baru.'
+      operationId: menyimpanDataPelangganBaru
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nama:
+                  type: string
+                  description: 'Nama pelanggan.'
+                  example: architecto
+                email:
+                  type: string
+                  description: 'Email pelanggan.'
+                  example: gbailey@example.net
+                username:
+                  type: string
+                  description: 'Username akun.'
+                  example: architecto
+                password:
+                  type: string
+                  description: 'Minimal 8 karakter.'
+                  example: '|]|{+-'
+                no_kwh:
+                  type: string
+                  description: 'Nomor KWH.'
+                  example: architecto
+                alamat:
+                  type: string
+                  description: 'Alamat pelanggan.'
+                  example: architecto
+                tarif_id:
+                  type: integer
+                  description: 'ID tarif.'
+                  example: 16
+              required:
+                - nama
+                - email
+                - username
+                - password
+                - no_kwh
+                - alamat
+                - tarif_id
+      security: []
+  /admin/pelanggan/create:
+    get:
+      summary: 'Menampilkan form untuk membuat pelanggan baru.'
+      operationId: menampilkanFormUntukMembuatPelangganBaru
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+  '/admin/pelanggan/{pelanggan_id}/edit':
+    get:
+      summary: 'Menampilkan form untuk mengedit pelanggan yang sudah ada.'
+      operationId: menampilkanFormUntukMengeditPelangganYangSudahAda
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: pelanggan_id
+        description: 'The ID of the pelanggan.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+  '/admin/pelanggan/{id}':
+    put:
+      summary: 'Memperbarui data pelanggan.'
+      operationId: memperbaruiDataPelanggan
+      description: 'Jika password tidak diisi, maka password lama tetap digunakan.'
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nama:
+                  type: string
+                  description: ''
+                  example: architecto
+                email:
+                  type: string
+                  description: ''
+                  example: architecto
+                username:
+                  type: string
+                  description: ''
+                  example: architecto
+                password:
+                  type: string
+                  description: 'Must be at least 8 characters.'
+                  example: ']|{+-0pBNvYg'
+                  nullable: true
+                no_kwh:
+                  type: string
+                  description: ''
+                  example: architecto
+                alamat:
+                  type: string
+                  description: ''
+                  example: architecto
+                tarif_id:
+                  type: string
+                  description: ''
+                  example: architecto
+              required:
+                - nama
+                - email
+                - username
+                - no_kwh
+                - alamat
+                - tarif_id
+      security: []
+    delete:
+      summary: 'Menghapus data pelanggan.'
+      operationId: menghapusDataPelanggan
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the pelanggan.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+  /admin/penggunaan:
+    get:
+      summary: 'Menampilkan daftar penggunaan.'
+      operationId: menampilkanDaftarPenggunaan
+      description: 'Mendukung pencarian berdasarkan bulan dan tahun serta pagination.'
+      parameters:
+        -
+          in: query
+          name: q
+          description: 'Opsional. Kata kunci pencarian.'
+          example: architecto
+          required: false
+          schema:
+            type: string
+            description: 'Opsional. Kata kunci pencarian.'
+            example: architecto
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+    post:
+      summary: 'Menyimpan data penggunaan baru.'
+      operationId: menyimpanDataPenggunaanBaru
+      description: 'Sekaligus membuat tagihan secara otomatis dalam satu transaksi database.'
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pelanggan_id:
+                  type: integer
+                  description: 'ID pelanggan.'
+                  example: 16
+                bulan:
+                  type: string
+                  description: 'Bulan penggunaan.'
+                  example: architecto
+                tahun:
+                  type: string
+                  description: 'Tahun penggunaan.'
+                  example: architecto
+                meter_awal:
+                  type: integer
+                  description: 'Meter awal.'
+                  example: 16
+                meter_akhir:
+                  type: integer
+                  description: 'Meter akhir.'
+                  example: 16
+              required:
+                - pelanggan_id
+                - bulan
+                - tahun
+                - meter_awal
+                - meter_akhir
+      security: []
+  /admin/penggunaan/create:
+    get:
+      summary: 'Menampilkan form pembuatan penggunaan.'
+      operationId: menampilkanFormPembuatanPenggunaan
+      description: 'Mengirim daftar pelanggan untuk dipilih.'
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+  '/admin/penggunaan/{penggunaan_id}/edit':
+    get:
+      summary: 'Menampilkan form edit penggunaan.'
+      operationId: menampilkanFormEditPenggunaan
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: penggunaan_id
+        description: 'The ID of the penggunaan.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+  '/admin/penggunaan/{id}':
+    put:
+      summary: 'Memperbarui data penggunaan.'
+      operationId: memperbaruiDataPenggunaan
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pelanggan_id:
+                  type: string
+                  description: ''
+                  example: architecto
+                bulan:
+                  type: string
+                  description: ''
+                  example: architecto
+                tahun:
+                  type: string
+                  description: ''
+                  example: architecto
+                meter_awal:
+                  type: string
+                  description: ''
+                  example: architecto
+                meter_akhir:
+                  type: string
+                  description: ''
+                  example: architecto
+              required:
+                - pelanggan_id
+                - bulan
+                - tahun
+                - meter_awal
+                - meter_akhir
+      security: []
+    delete:
+      summary: 'Menghapus data penggunaan.'
+      operationId: menghapusDataPenggunaan
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the penggunaan.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+  /admin/tagihan:
+    get:
+      summary: 'Menampilkan daftar tagihan.'
+      operationId: menampilkanDaftarTagihan
+      description: 'Mendukung pencarian berdasarkan bulan, tahun, dan status.'
+      parameters:
+        -
+          in: query
+          name: q
+          description: 'Opsional. Kata kunci pencarian.'
+          example: architecto
+          required: false
+          schema:
+            type: string
+            description: 'Opsional. Kata kunci pencarian.'
+            example: architecto
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+    post:
+      summary: 'Menyimpan data tagihan baru.'
+      operationId: menyimpanDataTagihanBaru
+      description: "Sistem akan otomatis menghitung:\n- jumlah meter (meter_akhir - meter_awal)\n- jumlah biaya berdasarkan tarif pelanggan"
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                penggunaan_id:
+                  type: integer
+                  description: 'ID penggunaan.'
+                  example: 16
+                status:
+                  type: string
+                  description: 'Status tagihan (paid/unpaid/pending).'
+                  example: architecto
+              required:
+                - penggunaan_id
+                - status
+      security: []
+  /admin/tagihan/create:
+    get:
+      summary: 'Menampilkan form pembuatan tagihan.'
+      operationId: menampilkanFormPembuatanTagihan
+      description: 'Hanya menampilkan data penggunaan yang belum memiliki tagihan.'
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+  '/admin/tagihan/{tagihan_id}/edit':
+    get:
+      summary: 'Menampilkan form edit tagihan.'
+      operationId: menampilkanFormEditTagihan
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: tagihan_id
+        description: 'The ID of the tagihan.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+  '/admin/tagihan/{id}':
+    put:
+      summary: 'Memperbarui data tagihan.'
+      operationId: memperbaruiDataTagihan
+      description: 'Hanya memperbarui status tagihan.'
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: 'Status terbaru.'
+                  example: architecto
+              required:
+                - status
+      security: []
+    delete:
+      summary: 'Menghapus data tagihan.'
+      operationId: menghapusDataTagihan
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the tagihan.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+  /admin/pembayaran:
+    get:
+      summary: 'Menampilkan daftar pembayaran dengan fitur pencarian dan pagination.'
+      operationId: menampilkanDaftarPembayaranDenganFiturPencarianDanPagination
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+    post:
+      summary: ''
+      operationId: postAdminPembayaran
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  /admin/pembayaran/create:
+    get:
+      summary: ''
+      operationId: getAdminPembayaranCreate
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+  '/admin/pembayaran/{pembayaran_id}/edit':
+    get:
+      summary: ''
+      operationId: getAdminPembayaranPembayaran_idEdit
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: pembayaran_id
+        description: 'The ID of the pembayaran.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+  '/admin/pembayaran/{id}':
+    put:
+      summary: ''
+      operationId: putAdminPembayaranId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    delete:
+      summary: 'Menghapus pembayaran dari database.'
+      operationId: menghapusPembayaranDariDatabase
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the pembayaran.'
+        example: 1
+        required: true
+        schema:
+          type: integer
