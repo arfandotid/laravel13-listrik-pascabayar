@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 
 class PenggunaanController extends Controller implements HasMiddleware
 {
+    // Mendaftarkan middleware untuk mengatur akses berdasarkan izin pengguna.
     public static function middleware()
     {
         return [
@@ -24,6 +25,7 @@ class PenggunaanController extends Controller implements HasMiddleware
         ];
     }
 
+    // Menampilkan daftar penggunaan dengan fitur pencarian dan pagination.
     public function index()
     {
         $penggunaan = Penggunaan::query()
@@ -41,12 +43,17 @@ class PenggunaanController extends Controller implements HasMiddleware
         return Inertia::render('Admin/Penggunaan/Index', compact('penggunaan'));
     }
 
+    // Menampilkan form untuk membuat penggunaan baru dengan daftar pelanggan yang tersedia.
     public function create()
     {
         $pelanggan = Pelanggan::select('id', 'nama', 'no_kwh')->get();
         return Inertia::render('Admin/Penggunaan/Create', compact('pelanggan'));
     }
 
+    /**
+     * Menyimpan data penggunaan baru ke database setelah validasi.
+     * Proses ini juga membuat tagihan terkait secara otomatis dalam satu transaksi untuk memastikan konsistensi data.
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -57,6 +64,7 @@ class PenggunaanController extends Controller implements HasMiddleware
             'meter_akhir' => 'required',
         ]);
 
+        // Menggunakan transaksi untuk memastikan bahwa pembuatan penggunaan dan tagihan terkait berjalan atomik.
         try {
             DB::transaction(function () use ($request) {
                 $penggunaan = Penggunaan::create([
@@ -88,12 +96,18 @@ class PenggunaanController extends Controller implements HasMiddleware
         }
     }
 
+    /**
+     * Menampilkan form untuk mengedit data penggunaan yang sudah ada.
+     */
     public function edit(Penggunaan $penggunaan)
     {
         $pelanggan = Pelanggan::select('id', 'nama', 'no_kwh')->get();
         return Inertia::render('Admin/Penggunaan/Edit', compact('penggunaan', 'pelanggan'));
     }
 
+    /**
+     * Memperbarui data penggunaan yang sudah ada di database setelah validasi.
+     */
     public function update(Request $request, Penggunaan $penggunaan)
     {
         $request->validate([
@@ -115,6 +129,9 @@ class PenggunaanController extends Controller implements HasMiddleware
         return redirect()->to('/admin/penggunaan')->with('success', 'Penggunaan updated successfully.');
     }
 
+    /**
+     * Menghapus penggunaan dari database.
+     */
     public function destroy(Penggunaan $penggunaan)
     {
         $penggunaan->delete();

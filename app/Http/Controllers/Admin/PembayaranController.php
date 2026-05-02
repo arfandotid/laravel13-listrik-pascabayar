@@ -11,6 +11,7 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class PembayaranController extends Controller implements HasMiddleware
 {
+    // Mendaftarkan middleware untuk mengatur akses berdasarkan izin pengguna.
     public static function middleware()
     {
         return [
@@ -19,6 +20,7 @@ class PembayaranController extends Controller implements HasMiddleware
         ];
     }
 
+    // Menampilkan daftar pembayaran dengan fitur pencarian dan pagination.
     public function index()
     {
         $pembayaran = Pembayaran::query()
@@ -59,6 +61,7 @@ class PembayaranController extends Controller implements HasMiddleware
         //
     }
 
+    // Menghapus pembayaran dari database.
     public function destroy(Pembayaran $pembayaran)
     {
         $pembayaran->delete();

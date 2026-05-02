@@ -9,11 +9,13 @@ use Inertia\Inertia;
 
 class LoginController extends Controller
 {
+    // Menampilkan halaman login untuk pelanggan.
     public function index()
     {
         return Inertia::render('Pelanggan/Auth/Login');
     }
 
+    // Memproses login pelanggan dengan validasi input dan autentikasi menggunakan guard 'pelanggan'.
     public function store(Request $request)
     {
         $request->validate([
@@ -39,6 +41,7 @@ class LoginController extends Controller
         ]);
     }
 
+    // Memproses logout pelanggan dengan menghapus sesi dan token CSRF, kemudian mengarahkan kembali ke halaman login.
     public function logout(Request $request)
     {
         Auth::guard('pelanggan')->logout();

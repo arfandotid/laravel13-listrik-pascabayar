@@ -12,6 +12,7 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class RoleController extends Controller implements HasMiddleware
 {
+    // Mendaftarkan middleware untuk mengatur akses berdasarkan izin pengguna.
     public static function middleware()
     {
         return [
@@ -22,6 +23,7 @@ class RoleController extends Controller implements HasMiddleware
         ];
     }
 
+    // Menampilkan daftar roles dengan fitur pencarian dan pagination.
     public function index()
     {
         $roles = Role::query()
@@ -38,11 +40,14 @@ class RoleController extends Controller implements HasMiddleware
         return Inertia::render('Admin/Roles/Index', compact('roles'));
     }
 
+    // Menampilkan form untuk membuat role baru dengan daftar permissions yang tersedia.
     public function create()
     {
         $permissions = Permission::select('id', 'name')->orderBy('name')->get();
         return Inertia::render('Admin/Roles/Create', compact('permissions'));
     }
+
+    // Menyimpan data role baru ke database setelah validasi, termasuk mengaitkan permissions yang dipilih.
     public function store(Request $request)
     {
         $request->validate([
@@ -64,6 +69,7 @@ class RoleController extends Controller implements HasMiddleware
         return redirect()->to('/admin/roles')->with('success', 'Role created successfully.');
     }
 
+    // Menampilkan form untuk mengedit data role yang sudah ada, termasuk daftar permissions yang tersedia dan permissions yang sudah terkait dengan role tersebut.
     public function edit(Role $role)
     {
         $role->load('permissions');
@@ -73,6 +79,7 @@ class RoleController extends Controller implements HasMiddleware
         return Inertia::render('Admin/Roles/Edit', compact('role', 'permissions', 'rolePermissions'));
     }
 
+    // Memperbarui data role yang sudah ada di database setelah validasi, termasuk memperbarui permissions yang terkait dengan role tersebut.
     public function update(Request $request, Role $role)
     {
         $request->validate([
@@ -92,6 +99,7 @@ class RoleController extends Controller implements HasMiddleware
         return redirect()->to('/admin/roles')->with('success', 'Role updated successfully.');
     }
 
+    // Menghapus role dari database.
     public function destroy(Role $role)
     {
         $role->delete();

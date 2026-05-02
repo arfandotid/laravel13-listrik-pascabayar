@@ -13,6 +13,10 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class UserController extends Controller implements HasMiddleware
 {
+    /**
+     * Mendaftarkan middleware untuk mengatur akses berdasarkan izin pengguna. 
+     * Setiap metode memiliki izin yang berbeda untuk memastikan keamanan dan kontrol akses yang tepat.
+     */
     public static function middleware()
     {
         return [
@@ -23,6 +27,7 @@ class UserController extends Controller implements HasMiddleware
         ];
     }
 
+    // Menampilkan daftar pengguna dengan fitur pencarian dan pagination.
     public function index()
     {
         $users = User::query()
@@ -42,12 +47,14 @@ class UserController extends Controller implements HasMiddleware
         return Inertia::render('Admin/Users/Index', compact('users'));
     }
 
+    // Menampilkan form untuk membuat pengguna baru dengan daftar peran yang tersedia.
     public function create()
     {
         $roles = Role::select('id', 'name')->orderBy('name')->get();
         return Inertia::render('Admin/Users/Create', compact('roles'));
     }
 
+    // Menyimpan data pengguna baru ke database setelah validasi, termasuk mengaitkan peran yang dipilih.
     public function store(Request $request)
     {
         $request->validate([
@@ -72,6 +79,7 @@ class UserController extends Controller implements HasMiddleware
         return redirect()->to('/admin/users')->with('success', 'User created successfully.');
     }
 
+    // Menampilkan form untuk mengedit data pengguna yang sudah ada, termasuk daftar peran yang tersedia dan peran yang sudah terkait dengan pengguna tersebut.
     public function edit(User $user)
     {
         $user->load('roles');
@@ -81,6 +89,7 @@ class UserController extends Controller implements HasMiddleware
         return Inertia::render('Admin/Users/Edit', compact('user', 'roles', 'userRoles'));
     }
 
+    // Memperbarui data pengguna yang sudah ada di database setelah validasi, termasuk memperbarui peran yang terkait dengan pengguna tersebut.
     public function update(Request $request, User $user)
     {
         $request->validate([
@@ -111,6 +120,7 @@ class UserController extends Controller implements HasMiddleware
         return redirect()->to('/admin/users')->with('success', 'User updated successfully.');
     }
 
+    // Menghapus pengguna dari database.
     public function destroy(User $user)
     {
         $user->delete();

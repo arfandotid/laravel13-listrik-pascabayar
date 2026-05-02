@@ -12,8 +12,13 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class SettingController extends Controller implements HasMiddleware
 {
+    // Menggunakan trait untuk menangani upload dan penghapusan file, khususnya untuk logo aplikasi.
     use FileUploadTrait;
 
+    /**
+     * Mendaftarkan middleware untuk mengatur akses berdasarkan izin pengguna.
+     * Setiap metode memiliki izin yang berbeda untuk memastikan keamanan dan kontrol akses yang tepat.
+     */
     public static function middleware()
     {
         return [
@@ -22,6 +27,8 @@ class SettingController extends Controller implements HasMiddleware
         ];
     }
 
+    // Menampilkan halaman pengaturan aplikasi dengan data setting yang ada, 
+    // khususnya untuk menampilkan logo aplikasi jika sudah diunggah.
     public function index()
     {
         // setting hanya 1 data
@@ -31,6 +38,7 @@ class SettingController extends Controller implements HasMiddleware
         return Inertia::render('Admin/Settings/Index', compact('setting'));
     }
 
+    // Memperbarui data setting aplikasi yang sudah ada di database setelah validasi, termasuk menangani upload logo aplikasi jika ada file baru yang diunggah.
     public function update(Request $request)
     {
         // setting hanya 1 data
@@ -69,6 +77,10 @@ class SettingController extends Controller implements HasMiddleware
         return redirect()->to('/admin/settings')->with('success', 'Setting updated successfully.');
     }
 
+    /**
+     * Menghapus logo aplikasi dari penyimpanan dan memperbarui data setting untuk mengosongkan field logo, 
+     * kemudian kembali ke halaman pengaturan dengan pesan sukses.
+     */
     public function deleteLogo()
     {
         // setting hanya 1 data

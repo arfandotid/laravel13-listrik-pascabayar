@@ -9,7 +9,7 @@ use Inertia\Inertia;
 
 class PembayaranController extends Controller
 {
-
+    // Menampilkan daftar pembayaran untuk pelanggan yang sedang login dengan fitur pencarian dan pagination.
     public function index()
     {
         $pelanggan_id = Auth::guard('pelanggan')->user()->id;

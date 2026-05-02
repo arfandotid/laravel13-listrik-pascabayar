@@ -11,6 +11,10 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class PelangganController extends Controller implements HasMiddleware
 {
+    /**
+     * Mendaftarkan middleware untuk mengatur akses berdasarkan izin pengguna. 
+     * Setiap metode memiliki izin yang berbeda untuk memastikan keamanan dan kontrol akses yang tepat.
+     */
     public static function middleware()
     {
         return [
@@ -21,6 +25,9 @@ class PelangganController extends Controller implements HasMiddleware
         ];
     }
 
+    /**
+     * Menenampilkan daftar pelanggan dengan fitur pencarian dan pagination.
+     */
     public function index()
     {
         $pelanggan = Pelanggan::query()
@@ -39,11 +46,13 @@ class PelangganController extends Controller implements HasMiddleware
         return Inertia::render('Admin/Pelanggan/Index', compact('pelanggan'));
     }
 
+    // Menampilkan form untuk membuat pelanggan baru.
     public function create()
     {
         return Inertia::render('Admin/Pelanggan/Create');
     }
 
+    // Menyimpan data pelanggan baru ke database setelah validasi.
     public function store(Request $request)
     {
         $request->validate([
@@ -69,11 +78,18 @@ class PelangganController extends Controller implements HasMiddleware
         return redirect()->to('/admin/pelanggan')->with('success', 'Pelanggan created successfully.');
     }
 
+    /**
+     * Menampilkan form untuk mengedit data pelanggan yang sudah ada.
+     */
     public function edit(Pelanggan $pelanggan)
     {
         return Inertia::render('Admin/Pelanggan/Edit', compact('pelanggan'));
     }
 
+    /**
+     * Memperbarui data pelanggan yang sudah ada di database setelah validasi.
+     * Jika password tidak diubah, tetap menggunakan password lama.
+     */
     public function update(Request $request, Pelanggan $pelanggan)
     {
         $request->validate([
@@ -99,6 +115,9 @@ class PelangganController extends Controller implements HasMiddleware
         return redirect()->to('/admin/pelanggan')->with('success', 'Pelanggan updated successfully.');
     }
 
+    /**
+     * Menghapus pelanggan dari database.
+     */
     public function destroy(Pelanggan $pelanggan)
     {
         $pelanggan->delete();

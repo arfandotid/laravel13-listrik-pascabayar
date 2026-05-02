@@ -11,6 +11,7 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class PermissionController extends Controller implements HasMiddleware
 {
+    // Mendaftarkan middleware untuk mengatur akses berdasarkan izin pengguna.
     public static function middleware()
     {
         return [
@@ -21,6 +22,7 @@ class PermissionController extends Controller implements HasMiddleware
         ];
     }
 
+    // Menampilkan daftar permissions dengan fitur pencarian dan pagination.
     public function index()
     {
         $permissions = Permission::query()
@@ -36,11 +38,15 @@ class PermissionController extends Controller implements HasMiddleware
         return Inertia::render('Admin/Permissions/Index', compact('permissions'));
     }
 
+    // Menampilkan form untuk membuat permission baru.
     public function create()
     {
         return Inertia::render('Admin/Permissions/Create');
     }
 
+    /**
+     * Menyimpan data permission baru ke database setelah validasi.
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -54,11 +60,17 @@ class PermissionController extends Controller implements HasMiddleware
         return redirect()->to('/admin/permissions')->with('success', 'Permission created successfully.');
     }
 
+    /**
+     * Menampilkan form untuk mengedit data permission yang sudah ada.
+     */
     public function edit(Permission $permission)
     {
         return Inertia::render('Admin/Permissions/Edit', compact('permission'));
     }
 
+    /**
+     * Memperbarui data permission yang sudah ada di database setelah validasi.
+     */
     public function update(Request $request, Permission $permission)
     {
         $request->validate([
@@ -72,6 +84,9 @@ class PermissionController extends Controller implements HasMiddleware
         return redirect()->to('/admin/permissions')->with('success', 'Permission updated successfully.');
     }
 
+    /**
+     * Menghapus permission dari database.
+     */
     public function destroy(Permission $permission)
     {
         $permission->delete();

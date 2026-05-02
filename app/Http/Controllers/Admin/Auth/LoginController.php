@@ -9,11 +9,13 @@ use Inertia\Inertia;
 
 class LoginController extends Controller
 {
+    // Menampilkan halaman login untuk admin.
     public function index()
     {
         return Inertia::render('Admin/Auth/Login');
     }
 
+    // Memproses login admin dengan validasi input dan autentikasi menggunakan guard default.
     public function store(Request $request)
     {
         $request->validate([
@@ -39,6 +41,7 @@ class LoginController extends Controller
         ]);
     }
 
+    // Memproses logout admin dengan menghapus sesi dan token CSRF, kemudian mengarahkan kembali ke halaman login.
     public function logout(Request $request)
     {
         Auth::logout();

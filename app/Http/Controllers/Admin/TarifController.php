@@ -11,6 +11,10 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class TarifController extends Controller implements HasMiddleware
 {
+    /**
+     * Mendaftarkan middleware untuk mengatur akses berdasarkan izin pengguna. 
+     * Setiap metode memiliki izin yang berbeda untuk memastikan keamanan dan kontrol akses yang tepat.
+     */
     public static function middleware()
     {
         return [
@@ -21,6 +25,7 @@ class TarifController extends Controller implements HasMiddleware
         ];
     }
 
+    // Menampilkan daftar tarif dengan fitur pencarian dan pagination.
     public function index()
     {
         $tarif = Tarif::query()
@@ -37,11 +42,13 @@ class TarifController extends Controller implements HasMiddleware
         return Inertia::render('Admin/Tarif/Index', compact('tarif'));
     }
 
+    // Menampilkan form untuk membuat tarif baru.
     public function create()
     {
         return Inertia::render('Admin/Tarif/Create');
     }
 
+    // Menyimpan data tarif baru ke database setelah validasi.
     public function store(Request $request)
     {
         $request->validate([
@@ -57,11 +64,13 @@ class TarifController extends Controller implements HasMiddleware
         return redirect()->to('/admin/tarif')->with('success', 'Tarif created successfully.');
     }
 
+    // Menampilkan form untuk mengedit data tarif yang sudah ada.
     public function edit(Tarif $tarif)
     {
         return Inertia::render('Admin/Tarif/Edit', compact('tarif'));
     }
 
+    // Memperbarui data tarif yang sudah ada di database setelah validasi.
     public function update(Request $request, Tarif $tarif)
     {
         $request->validate([
@@ -77,6 +86,7 @@ class TarifController extends Controller implements HasMiddleware
         return redirect()->to('/admin/tarif')->with('success', 'Tarif updated successfully.');
     }
 
+    // Menghapus tarif dari database.
     public function destroy(Tarif $tarif)
     {
         $tarif->delete();

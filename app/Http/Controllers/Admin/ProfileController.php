@@ -11,12 +11,18 @@ use Inertia\Inertia;
 
 class ProfileController extends Controller
 {
+    /**
+     * Menampilkan halaman profil pengguna.
+     */
     public function index()
     {
         $user = Auth::user();
         return Inertia::render('Admin/Profile/Index', compact('user'));
     }
 
+    /**
+     * Memperbarui informasi profil pengguna.
+     */
     public function update(Request $request)
     {
         $userId = Auth::user()->id;
@@ -40,11 +46,17 @@ class ProfileController extends Controller
         return redirect()->to('/admin/profile')->with('success', 'Profile updated successfully.');
     }
 
+    /**
+     * Menampilkan halaman untuk mengubah password pengguna.
+     */
     public function changePassword()
     {
         return Inertia::render('Admin/Profile/ChangePassword');
     }
 
+    /**
+     * Memperbarui password pengguna setelah validasi.
+     */
     public function updatePassword(Request $request)
     {
         $userId = Auth::user()->id;
