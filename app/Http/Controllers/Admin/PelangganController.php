@@ -9,11 +9,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
 
+/**
+ * Controller untuk mengelola data pelanggan.
+ */
 class PelangganController extends Controller implements HasMiddleware
 {
     /**
-     * Mendaftarkan middleware untuk mengatur akses berdasarkan izin pengguna. 
-     * Setiap metode memiliki izin yang berbeda untuk memastikan keamanan dan kontrol akses yang tepat.
+     * Mendefinisikan middleware berbasis permission.
+     *
+     * @return array<int, \Illuminate\Routing\Controllers\Middleware>
      */
     public static function middleware()
     {
@@ -26,7 +30,15 @@ class PelangganController extends Controller implements HasMiddleware
     }
 
     /**
-     * Menenampilkan daftar pelanggan dengan fitur pencarian dan pagination.
+     * Menampilkan daftar pelanggan.
+     *
+     * Menyediakan data pelanggan dengan fitur:
+     * - Pencarian berdasarkan nama, email, atau nomor KWH
+     * - Pagination
+     *
+     * @queryParam q string Opsional. Kata kunci pencarian.
+     *
+     * @return \Inertia\Response
      */
     public function index()
     {
@@ -46,13 +58,31 @@ class PelangganController extends Controller implements HasMiddleware
         return Inertia::render('Admin/Pelanggan/Index', compact('pelanggan'));
     }
 
-    // Menampilkan form untuk membuat pelanggan baru.
+    /**
+     * Menampilkan form untuk membuat pelanggan baru.
+     * 
+     * @return \Inertia\Response
+     */
     public function create()
     {
         return Inertia::render('Admin/Pelanggan/Create');
     }
 
-    // Menyimpan data pelanggan baru ke database setelah validasi.
+    /**
+     * Menyimpan data pelanggan baru.
+     *
+     * @param Request $request
+     *
+     * @bodyParam nama string required Nama pelanggan.
+     * @bodyParam email string required Email pelanggan.
+     * @bodyParam username string required Username akun.
+     * @bodyParam password string required Minimal 8 karakter.
+     * @bodyParam no_kwh string required Nomor KWH.
+     * @bodyParam alamat string required Alamat pelanggan.
+     * @bodyParam tarif_id integer required ID tarif.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -79,7 +109,11 @@ class PelangganController extends Controller implements HasMiddleware
     }
 
     /**
-     * Menampilkan form untuk mengedit data pelanggan yang sudah ada.
+     * Menampilkan form untuk mengedit pelanggan yang sudah ada.
+     * 
+     * @param Pelanggan $pelanggan
+     *
+     * @return \Inertia\Response
      */
     public function edit(Pelanggan $pelanggan)
     {
@@ -87,8 +121,14 @@ class PelangganController extends Controller implements HasMiddleware
     }
 
     /**
-     * Memperbarui data pelanggan yang sudah ada di database setelah validasi.
-     * Jika password tidak diubah, tetap menggunakan password lama.
+     * Memperbarui data pelanggan.
+     *
+     * Jika password tidak diisi, maka password lama tetap digunakan.
+     *
+     * @param Request $request
+     * @param Pelanggan $pelanggan
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Pelanggan $pelanggan)
     {
@@ -116,7 +156,11 @@ class PelangganController extends Controller implements HasMiddleware
     }
 
     /**
-     * Menghapus pelanggan dari database.
+     * Menghapus data pelanggan.
+     *
+     * @param Pelanggan $pelanggan
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Pelanggan $pelanggan)
     {

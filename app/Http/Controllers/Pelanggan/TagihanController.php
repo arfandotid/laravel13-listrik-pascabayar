@@ -11,12 +11,19 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
+/**
+ * Controller untuk mengelola data tagihan.
+ */
 class TagihanController extends Controller
 {
     // Menggunakan trait untuk menangani proses upload file dengan cara yang terstruktur dan dapat digunakan kembali di berbagai bagian aplikasi.
     use FileUploadTrait;
 
-    // Menampilkan daftar tagihan untuk pelanggan yang sedang login dengan fitur pencarian dan pagination.
+    /**
+     * Menampilkan daftar tagihan untuk pelanggan yang sedang login dengan fitur pencarian dan pagination.
+     *
+     * @return \Inertia\Response
+     */
     public function index()
     {
         $pelanggan_id = Auth::guard('pelanggan')->user()->id;
@@ -36,7 +43,14 @@ class TagihanController extends Controller
         return Inertia::render('Pelanggan/Tagihan/Index', compact('tagihan'));
     }
 
-    // Menampilkan form untuk mengedit data tagihan yang sudah ada, termasuk informasi pelanggan terkait.
+    /**
+     * Menampilkan form untuk mengedit data tagihan yang sudah ada, termasuk informasi pelanggan terkait.
+     *
+     * @param Request $request
+     * @param int $id
+     *
+     * @return \Inertia\Response
+     */
     public function update(Request $request, $id)
     {
         $request->validate([

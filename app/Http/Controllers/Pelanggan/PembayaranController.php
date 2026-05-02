@@ -7,9 +7,16 @@ use App\Models\Pembayaran;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
+/**
+ * Controller untuk mengelola data pembayaran.
+ */
 class PembayaranController extends Controller
 {
-    // Menampilkan daftar pembayaran untuk pelanggan yang sedang login dengan fitur pencarian dan pagination.
+    /**
+     * Menampilkan daftar pembayaran untuk pelanggan yang sedang login dengan fitur pencarian dan pagination.
+     *
+     * @return \Inertia\Response
+     */
     public function index()
     {
         $pelanggan_id = Auth::guard('pelanggan')->user()->id;

@@ -11,11 +11,15 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
 
+/**
+ * Controller untuk manajemen pengguna (user) dan role.
+ */
 class UserController extends Controller implements HasMiddleware
 {
     /**
-     * Mendaftarkan middleware untuk mengatur akses berdasarkan izin pengguna. 
-     * Setiap metode memiliki izin yang berbeda untuk memastikan keamanan dan kontrol akses yang tepat.
+     * Mendefinisikan middleware berbasis permission.
+     *
+     * @return array<int, \Illuminate\Routing\Controllers\Middleware>
      */
     public static function middleware()
     {
@@ -27,7 +31,15 @@ class UserController extends Controller implements HasMiddleware
         ];
     }
 
-    // Menampilkan daftar pengguna dengan fitur pencarian dan pagination.
+    /**
+     * Menampilkan daftar pengguna.
+     *
+     * Mendukung pencarian berdasarkan nama dan email serta pagination.
+     *
+     * @queryParam q string Opsional. Kata kunci pencarian.
+     *
+     * @return \Inertia\Response
+     */
     public function index()
     {
         $users = User::query()
@@ -47,14 +59,35 @@ class UserController extends Controller implements HasMiddleware
         return Inertia::render('Admin/Users/Index', compact('users'));
     }
 
-    // Menampilkan form untuk membuat pengguna baru dengan daftar peran yang tersedia.
+    /**
+     * Menampilkan form pembuatan pengguna.
+     *
+     * Mengirim daftar role yang tersedia.
+     *
+     * @return \Inertia\Response
+     */
     public function create()
     {
         $roles = Role::select('id', 'name')->orderBy('name')->get();
         return Inertia::render('Admin/Users/Create', compact('roles'));
     }
 
-    // Menyimpan data pengguna baru ke database setelah validasi, termasuk mengaitkan peran yang dipilih.
+    /**
+     * Menyimpan data pengguna baru.
+     *
+     * Termasuk assign role ke pengguna.
+     *
+     * @param Request $request
+     *
+     * @bodyParam name string required Nama pengguna.
+     * @bodyParam email string required Email unik.
+     * @bodyParam username string required Username unik.
+     * @bodyParam password string required Minimal 8 karakter.
+     * @bodyParam roles array required Array ID role.
+     * @bodyParam roles.* integer required ID role yang valid.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -79,7 +112,18 @@ class UserController extends Controller implements HasMiddleware
         return redirect()->to('/admin/users')->with('success', 'User created successfully.');
     }
 
-    // Menampilkan form untuk mengedit data pengguna yang sudah ada, termasuk daftar peran yang tersedia dan peran yang sudah terkait dengan pengguna tersebut.
+    /**
+     * Menampilkan form edit pengguna.
+     *
+     * Mengirim:
+     * - data user
+     * - daftar role
+     * - role yang sudah dimiliki user
+     *
+     * @param User $user
+     *
+     * @return \Inertia\Response
+     */
     public function edit(User $user)
     {
         $user->load('roles');
@@ -89,7 +133,23 @@ class UserController extends Controller implements HasMiddleware
         return Inertia::render('Admin/Users/Edit', compact('user', 'roles', 'userRoles'));
     }
 
-    // Memperbarui data pengguna yang sudah ada di database setelah validasi, termasuk memperbarui peran yang terkait dengan pengguna tersebut.
+    /**
+     * Memperbarui data pengguna.
+     *
+     * Jika password diisi, maka password akan diperbarui.
+     * Role pengguna akan disinkronisasi ulang.
+     *
+     * @param Request $request
+     * @param User $user
+     *
+     * @bodyParam name string required Nama pengguna.
+     * @bodyParam email string required Email unik.
+     * @bodyParam username string required Username unik.
+     * @bodyParam password string Opsional Minimal 8 karakter.
+     * @bodyParam roles array required Array ID role.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(Request $request, User $user)
     {
         $request->validate([
@@ -120,7 +180,13 @@ class UserController extends Controller implements HasMiddleware
         return redirect()->to('/admin/users')->with('success', 'User updated successfully.');
     }
 
-    // Menghapus pengguna dari database.
+    /**
+     * Menghapus data pengguna.
+     *
+     * @param User $user
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy(User $user)
     {
         $user->delete();

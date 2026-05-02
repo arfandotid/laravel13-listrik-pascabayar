@@ -10,11 +10,15 @@ use App\Models\Penggunaan;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
 
+/**
+ * Controller untuk mengelola data tagihan listrik pelanggan.
+ */
 class TagihanController extends Controller implements HasMiddleware
 {
     /**
-     * Mendaftarkan middleware untuk mengatur akses berdasarkan izin pengguna. 
-     * Setiap metode memiliki izin yang berbeda untuk memastikan keamanan dan kontrol akses yang tepat.
+     * Mendefinisikan middleware berbasis permission.
+     *
+     * @return array<int, \Illuminate\Routing\Controllers\Middleware>
      */
     public static function middleware()
     {
@@ -26,7 +30,15 @@ class TagihanController extends Controller implements HasMiddleware
         ];
     }
 
-    // Menampilkan daftar tagihan dengan fitur pencarian dan pagination.
+    /**
+     * Menampilkan daftar tagihan.
+     *
+     * Mendukung pencarian berdasarkan bulan, tahun, dan status.
+     *
+     * @queryParam q string Opsional. Kata kunci pencarian.
+     *
+     * @return \Inertia\Response
+     */
     public function index()
     {
         $tagihan = Tagihan::query()
@@ -45,14 +57,33 @@ class TagihanController extends Controller implements HasMiddleware
         return Inertia::render('Admin/Tagihan/Index', compact('tagihan'));
     }
 
-    // Menampilkan form untuk membuat tagihan baru dengan daftar penggunaan yang belum memiliki tagihan terkait.
+    /**
+     * Menampilkan form pembuatan tagihan.
+     *
+     * Hanya menampilkan data penggunaan yang belum memiliki tagihan.
+     *
+     * @return \Inertia\Response
+     */
     public function create()
     {
         $penggunaan = Penggunaan::with('pelanggan')->doesntHave('tagihan')->get();
         return Inertia::render('Admin/Tagihan/Create', compact('penggunaan'));
     }
 
-    // Menyimpan data tagihan baru ke database setelah validasi, termasuk menghitung jumlah biaya berdasarkan penggunaan dan tarif pelanggan terkait.
+    /**
+     * Menyimpan data tagihan baru.
+     *
+     * Sistem akan otomatis menghitung:
+     * - jumlah meter (meter_akhir - meter_awal)
+     * - jumlah biaya berdasarkan tarif pelanggan
+     *
+     * @param Request $request
+     *
+     * @bodyParam penggunaan_id integer required ID penggunaan.
+     * @bodyParam status string required Status tagihan (paid/unpaid/pending).
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -77,13 +108,30 @@ class TagihanController extends Controller implements HasMiddleware
         return redirect()->to('/admin/tagihan')->with('success', 'Tagihan created successfully.');
     }
 
-    // Menampilkan form untuk mengedit data tagihan yang sudah ada.
+    /**
+     * Menampilkan form edit tagihan.
+     *
+     * @param Tagihan $tagihan
+     *
+     * @return \Inertia\Response
+     */
     public function edit(Tagihan $tagihan)
     {
         return Inertia::render('Admin/Tagihan/Edit', compact('tagihan'));
     }
 
-    // Memperbarui data tagihan yang sudah ada di database setelah validasi, termasuk memperbarui status tagihan.
+    /**
+     * Memperbarui data tagihan.
+     *
+     * Hanya memperbarui status tagihan.
+     *
+     * @param Request $request
+     * @param Tagihan $tagihan
+     *
+     * @bodyParam status string required Status terbaru.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(Request $request, Tagihan $tagihan)
     {
         $request->validate([
@@ -97,7 +145,13 @@ class TagihanController extends Controller implements HasMiddleware
         return redirect()->to('/admin/tagihan')->with('success', 'Tagihan updated successfully.');
     }
 
-    // Menghapus tagihan dari database.
+    /**
+     * Menghapus data tagihan.
+     *
+     * @param Tagihan $tagihan
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy(Tagihan $tagihan)
     {
         $tagihan->delete();

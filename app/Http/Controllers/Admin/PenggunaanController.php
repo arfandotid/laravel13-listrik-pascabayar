@@ -12,9 +12,16 @@ use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * Controller untuk mengelola data penggunaan listrik pelanggan.
+ */
 class PenggunaanController extends Controller implements HasMiddleware
 {
-    // Mendaftarkan middleware untuk mengatur akses berdasarkan izin pengguna.
+    /**
+     * Mendefinisikan middleware berbasis permission.
+     *
+     * @return array<int, \Illuminate\Routing\Controllers\Middleware>
+     */
     public static function middleware()
     {
         return [
@@ -24,8 +31,15 @@ class PenggunaanController extends Controller implements HasMiddleware
             new Middleware(['permission:penggunaan.delete'], only: ['destroy']),
         ];
     }
-
-    // Menampilkan daftar penggunaan dengan fitur pencarian dan pagination.
+    /**
+     * Menampilkan daftar penggunaan.
+     *
+     * Mendukung pencarian berdasarkan bulan dan tahun serta pagination.
+     *
+     * @queryParam q string Opsional. Kata kunci pencarian.
+     *
+     * @return \Inertia\Response
+     */
     public function index()
     {
         $penggunaan = Penggunaan::query()
@@ -43,7 +57,13 @@ class PenggunaanController extends Controller implements HasMiddleware
         return Inertia::render('Admin/Penggunaan/Index', compact('penggunaan'));
     }
 
-    // Menampilkan form untuk membuat penggunaan baru dengan daftar pelanggan yang tersedia.
+    /**
+     * Menampilkan form pembuatan penggunaan.
+     *
+     * Mengirim daftar pelanggan untuk dipilih.
+     *
+     * @return \Inertia\Response
+     */
     public function create()
     {
         $pelanggan = Pelanggan::select('id', 'nama', 'no_kwh')->get();
@@ -51,8 +71,19 @@ class PenggunaanController extends Controller implements HasMiddleware
     }
 
     /**
-     * Menyimpan data penggunaan baru ke database setelah validasi.
-     * Proses ini juga membuat tagihan terkait secara otomatis dalam satu transaksi untuk memastikan konsistensi data.
+     * Menyimpan data penggunaan baru.
+     *
+     * Sekaligus membuat tagihan secara otomatis dalam satu transaksi database.
+     *
+     * @param Request $request
+     *
+     * @bodyParam pelanggan_id integer required ID pelanggan.
+     * @bodyParam bulan string required Bulan penggunaan.
+     * @bodyParam tahun string required Tahun penggunaan.
+     * @bodyParam meter_awal integer required Meter awal.
+     * @bodyParam meter_akhir integer required Meter akhir.
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -97,7 +128,11 @@ class PenggunaanController extends Controller implements HasMiddleware
     }
 
     /**
-     * Menampilkan form untuk mengedit data penggunaan yang sudah ada.
+     * Menampilkan form edit penggunaan.
+     *
+     * @param Penggunaan $penggunaan
+     *
+     * @return \Inertia\Response
      */
     public function edit(Penggunaan $penggunaan)
     {
@@ -106,7 +141,12 @@ class PenggunaanController extends Controller implements HasMiddleware
     }
 
     /**
-     * Memperbarui data penggunaan yang sudah ada di database setelah validasi.
+     * Memperbarui data penggunaan.
+     *
+     * @param Request $request
+     * @param Penggunaan $penggunaan
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Penggunaan $penggunaan)
     {
@@ -130,7 +170,11 @@ class PenggunaanController extends Controller implements HasMiddleware
     }
 
     /**
-     * Menghapus penggunaan dari database.
+     * Menghapus data penggunaan.
+     *
+     * @param Penggunaan $penggunaan
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Penggunaan $penggunaan)
     {

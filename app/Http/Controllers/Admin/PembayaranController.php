@@ -9,9 +9,16 @@ use App\Http\Controllers\Controller;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
 
+/**
+ * Controller untuk mengelola data pembayaran.
+ */
 class PembayaranController extends Controller implements HasMiddleware
 {
-    // Mendaftarkan middleware untuk mengatur akses berdasarkan izin pengguna.
+    /**
+     * Mendefinisikan middleware berbasis permission.
+     *
+     * @return array<int, \Illuminate\Routing\Controllers\Middleware>
+     */
     public static function middleware()
     {
         return [
@@ -20,7 +27,11 @@ class PembayaranController extends Controller implements HasMiddleware
         ];
     }
 
-    // Menampilkan daftar pembayaran dengan fitur pencarian dan pagination.
+    /**
+     * Menampilkan daftar pembayaran dengan fitur pencarian dan pagination.
+     *
+     * @return \Inertia\Response
+     */
     public function index()
     {
         $pembayaran = Pembayaran::query()
@@ -61,7 +72,13 @@ class PembayaranController extends Controller implements HasMiddleware
         //
     }
 
-    // Menghapus pembayaran dari database.
+    /**
+     * Menghapus pembayaran dari database.
+     *
+     * @param Pembayaran $pembayaran
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy(Pembayaran $pembayaran)
     {
         $pembayaran->delete();

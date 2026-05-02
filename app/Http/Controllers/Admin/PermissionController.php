@@ -9,9 +9,16 @@ use Spatie\Permission\Models\Permission;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
 
+/**
+ * Controller untuk manajemen permission (hak akses).
+ */
 class PermissionController extends Controller implements HasMiddleware
 {
-    // Mendaftarkan middleware untuk mengatur akses berdasarkan izin pengguna.
+    /**
+     * Mendefinisikan middleware berbasis permission.
+     *
+     * @return array<int, \Illuminate\Routing\Controllers\Middleware>
+     */
     public static function middleware()
     {
         return [
@@ -22,7 +29,15 @@ class PermissionController extends Controller implements HasMiddleware
         ];
     }
 
-    // Menampilkan daftar permissions dengan fitur pencarian dan pagination.
+    /**
+     * Menampilkan daftar permission.
+     *
+     * Mendukung pencarian dan pagination.
+     *
+     * @queryParam q string Opsional. Nama permission.
+     *
+     * @return \Inertia\Response
+     */
     public function index()
     {
         $permissions = Permission::query()
@@ -38,14 +53,24 @@ class PermissionController extends Controller implements HasMiddleware
         return Inertia::render('Admin/Permissions/Index', compact('permissions'));
     }
 
-    // Menampilkan form untuk membuat permission baru.
+    /**
+     * Menampilkan form pembuatan permission.
+     *
+     * @return \Inertia\Response
+     */
     public function create()
     {
         return Inertia::render('Admin/Permissions/Create');
     }
 
     /**
-     * Menyimpan data permission baru ke database setelah validasi.
+     * Menyimpan permission baru.
+     *
+     * @param Request $request
+     *
+     * @bodyParam name string required Nama permission (unik).
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -61,7 +86,11 @@ class PermissionController extends Controller implements HasMiddleware
     }
 
     /**
-     * Menampilkan form untuk mengedit data permission yang sudah ada.
+     * Menampilkan form edit permission.
+     *
+     * @param Permission $permission
+     *
+     * @return \Inertia\Response
      */
     public function edit(Permission $permission)
     {
@@ -69,7 +98,12 @@ class PermissionController extends Controller implements HasMiddleware
     }
 
     /**
-     * Memperbarui data permission yang sudah ada di database setelah validasi.
+     * Memperbarui permission.
+     *
+     * @param Request $request
+     * @param Permission $permission
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Permission $permission)
     {
@@ -85,7 +119,11 @@ class PermissionController extends Controller implements HasMiddleware
     }
 
     /**
-     * Menghapus permission dari database.
+     * Menghapus permission.
+     *
+     * @param Permission $permission
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Permission $permission)
     {

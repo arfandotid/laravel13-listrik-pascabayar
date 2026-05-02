@@ -7,15 +7,35 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
+/**
+ * Controller untuk autentikasi pengguna (login & logout).
+ */
 class LoginController extends Controller
 {
-    // Menampilkan halaman login untuk pelanggan.
+    /**
+     * Menampilkan halaman login pengguna.
+     *
+     * @return \Inertia\Response
+     */
     public function index()
     {
         return Inertia::render('Pelanggan/Auth/Login');
     }
 
-    // Memproses login pelanggan dengan validasi input dan autentikasi menggunakan guard 'pelanggan'.
+    /**
+     * Memproses login pelanggan.
+     *
+     * Mendukung login menggunakan:
+     * - email
+     * - username
+     *
+     * @param Request $request
+     *
+     * @bodyParam login string required Email atau username.
+     * @bodyParam password string required Password pengguna.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -41,7 +61,15 @@ class LoginController extends Controller
         ]);
     }
 
-    // Memproses logout pelanggan dengan menghapus sesi dan token CSRF, kemudian mengarahkan kembali ke halaman login.
+    /**
+     * Memproses logout pelanggan.
+     *
+     * Menghapus session dan token keamanan.
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function logout(Request $request)
     {
         Auth::guard('pelanggan')->logout();
